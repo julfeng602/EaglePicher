@@ -296,14 +296,15 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.PART_NO = part_no_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
                 AND sysdate between l.effective_from and l.expires 
-                order by d.license_connected desc
+                order by d.license_connected desc -- returnes true value first
                 fetch first 1 rows only;
         EXCEPTION 
           WHEN NO_DATA_FOUND THEN	
             retVal := NULL;
         END; 
         return retVal;
-    END GetLicenseConn;   
+    END GetLicenseConn; 
+
     function GetExportControlled(part_no_ in varchar2) return varchar2
     is
         retVal varchar2(5);
