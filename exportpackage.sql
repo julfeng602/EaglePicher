@@ -233,8 +233,8 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
         end if;
         return retVal;
     END ExportMessage;
-    
-    /* Functions used in Reporting */
+
+    /* Functions used in Reporting (Quick Reports) */
     function GetLicenseNo(order_no_ in varchar2,
                           order_ref2_ in varchar2,
                           order_ref3_ in varchar2,
