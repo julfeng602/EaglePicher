@@ -151,7 +151,8 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
-                AND sysdate between l.effective_from and l.expires;
+                AND sysdate between l.effective_from and l.expires
+                 order by d.license_connected desc fetch first 1 rows only;
         EXCEPTION 
           WHEN NO_DATA_FOUND THEN	
             license_no_ := NULL;
@@ -259,7 +260,8 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
-                AND sysdate between l.effective_from and l.expires;
+                AND sysdate between l.effective_from and l.expires 
+                order by d.license_connected desc fetch first 1 rows only;
         EXCEPTION 
           WHEN NO_DATA_FOUND THEN	
             retVal := NULL;
@@ -293,7 +295,9 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
-                AND sysdate between l.effective_from and l.expires;
+                AND sysdate between l.effective_from and l.expires 
+                order by d.license_connected desc
+                fetch first 1 rows only;
         EXCEPTION 
           WHEN NO_DATA_FOUND THEN	
             retVal := NULL;
