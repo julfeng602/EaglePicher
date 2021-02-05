@@ -54,12 +54,14 @@ CREATE OR REPLACE PACKAGE &PKG AS
                           order_ref3_ in varchar2,
                           order_ref4_ in varchar2,
                           part_no_ in varchar2,
+                          connected_source_qty_ in number,
                           customer_id_ in varchar2) RETURN varchar2;
     function GetLicenseConn(order_no_ in varchar2,
                           order_ref2_ in varchar2,
                           order_ref3_ in varchar2,
                           order_ref4_ in varchar2,
                           part_no_ in varchar2,
+                          connected_source_qty_ in number,
                           customer_id_ in varchar2) RETURN varchar2;
     function GetExportControlled(part_no_ in varchar2) return varchar2;
 END &PKG;
@@ -127,6 +129,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                           order_ref3_ in varchar2,
                           order_ref4_ in varchar2,
                           part_no_ in varchar2,
+                          connected_source_qty_ in number,
                           customer_id_ in varchar2, 
                           license_no_ out varchar2,
                           license_connected_ out varchar2)
@@ -150,6 +153,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF3 = order_ref3_
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
+                and d.quantity >= connected_source_qty_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
                 AND sysdate between l.effective_from and l.expires
                  order by d.license_connected desc fetch first 1 rows only;
@@ -181,7 +185,8 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
             l.source_ref2,
             l.source_ref3,
             l.source_ref4,
-            l.source_part_no as part_no
+            l.source_part_no as part_no,
+            l.connected_source_qty
         from shipment s 
         left outer join shipment_line l
         on l.shipment_id = s.shipment_id
@@ -199,6 +204,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                             shipment_line_.source_ref3,
                             shipment_line_.source_ref4,
                             shipment_line_.part_no,
+                            shipment_line_.connected_source_qty,
                             customer_no_,
                             license_no_,
                             license_connected_);
@@ -222,12 +228,13 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
         END IF;       
       Return retVal;
 	END ExportCheckOk;
+    
     function ExportMessage (shipment_id_ in int) RETURN varchar2
 	IS 
     retVal varchar2(4000);
     BEGIN
         IF (ExportCheckOk(shipment_id_) = 0) then
-            retVal := 'Shipment is not allowed due to customer order line(s) not linked to Export License.';
+            retVal := 'Shipment is not allowed due to customer order line(s) not linked to Export License or qty exceeds license.';
         else
             retVal := 'Shipment is allowed for export or is a US based shipment.';
         end if;
@@ -240,6 +247,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                           order_ref3_ in varchar2,
                           order_ref4_ in varchar2,
                           part_no_ in varchar2,
+                          connected_source_qty_ in number,
                           customer_id_ in varchar2) RETURN varchar2
     IS
       retVal export_license_tab.license_number%type;
@@ -260,6 +268,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF3 = order_ref3_
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
+                and d.quantity >= connected_source_qty_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
                 AND sysdate between l.effective_from and l.expires 
                 order by d.license_connected desc fetch first 1 rows only;
@@ -275,6 +284,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                           order_ref3_ in varchar2,
                           order_ref4_ in varchar2,
                           part_no_ in varchar2,
+                          connected_source_qty_ in number,
                           customer_id_ in varchar2) RETURN varchar2
     IS
       retVal EXP_LICENSE_CONNECT_DETAIL.license_connected%type;
@@ -295,6 +305,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                 and h.ORDER_REF3 = order_ref3_
                 and h.ORDER_REF4 = order_ref4_
                 and h.PART_NO = part_no_
+                and d.quantity >= connected_source_qty_
                 AND h.END_USER_CUSTOMER_ID = customer_id_
                 AND sysdate between l.effective_from and l.expires 
                 order by d.license_connected desc -- returnes true value first

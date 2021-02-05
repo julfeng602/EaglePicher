@@ -69,7 +69,7 @@ select
 || 'l.catalog_no ""' || ' Catalog No ' || '"" , '
 || 'l.catalog_desc ""' || ' Catalog Desc ' || '"" , '
 || 'l.buy_qty_due ""' || ' Price Qty ' || '"" , '
-|| '(l.buy_qty_due * l.sale_unit_price ) ""' || ' Total Net Amount ' || '"" ,'
+|| '(l.buy_qty_due * l.sale_unit_price ) ""' || ' Total Net Amount ' || '"" , '
 || 'IFSAPP.EP_Export_Shipment_Check.GetExportControlled(l.part_no) ""' || ' Export Controlled Part ' || '"" , '
 || 'IFSAPP.EP_Export_Shipment_Check.GetLicenseNo(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, o.customer_no) ""' || ' License No ' || '"" ,  '
 || 'IFSAPP.EP_Export_Shipment_Check.GetLicenseConn(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, o.customer_no) ""' || ' License Status/Connected ' || '""  '

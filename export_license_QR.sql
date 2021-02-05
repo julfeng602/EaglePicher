@@ -73,7 +73,7 @@ select
 || ' export_license l '
 || ' LEFT OUTER JOIN export_license_coverage  lc ON lc.export_license_id = l.export_license_id '
 || 'where '
-|| '  lc.part_no  LIKE ( '''''||chr(38)||'PartNo'||chr(37)||''''' ) '
+|| '  UPPER(lc.part_no)  LIKE ( UPPER('''''||chr(38)||'PartNo'||chr(37)||''''' )) '
 || 'order by  '
 || 'lc.part_no, l.effective_from desc '
 as sql_s
