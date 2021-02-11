@@ -2,7 +2,7 @@
  * COPYRIGHT 2021 EAGLE PICHER                                                 *
  *******************************************************************************
  * Created By:      Jonathan Ulfeng                                            *
- * Date Created:    2/3/2021                                                   *
+ * Date Created:    2/11/2021                                                   *
  * Description:     Checks Export Status for Customer Order                    *
  *                                                                             *
  *                                                                             *
@@ -71,8 +71,8 @@ select
 || 'l.buy_qty_due ""' || ' Price Qty ' || '"" , '
 || '(l.buy_qty_due * l.sale_unit_price ) ""' || ' Total Net Amount ' || '"" , '
 || 'IFSAPP.EP_Export_Shipment_Check.GetExportControlled(l.part_no) ""' || ' Export Controlled Part ' || '"" , '
-|| 'IFSAPP.EP_Export_Shipment_Check.GetLicenseNo(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, o.customer_no) ""' || ' License No ' || '"" ,  '
-|| 'IFSAPP.EP_Export_Shipment_Check.GetLicenseConn(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, o.customer_no) ""' || ' License Status/Connected ' || '""  '
+|| 'IFSAPP.EP_Export_Shipment_Check.GetLicenseNo(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, l.buy_qty_due,  o.customer_no) ""' || ' License No ' || '"" ,  '
+|| 'IFSAPP.EP_Export_Shipment_Check.GetLicenseConn(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, l.buy_qty_due, o.customer_no) ""' || ' License Status/Connected ' || '""  '
 || 'from  '
 || 'customer_order_cfv o '
 || 'left outer join customer_order_line l '
