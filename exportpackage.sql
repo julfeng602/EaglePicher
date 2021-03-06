@@ -30,14 +30,14 @@ spool ../logs/ExportShipmentCheck_&db._&runtime..log
 --
 --  Date    Sign    History
 --  ------  ------  ------------------------------------------------------------
---  201014  JoUlUS  Initial Create Package for Export License.
+--  210214  JoUlUS  Initial Create Package for Export License.
 
 DEFINE MODULE             = EXPCTR
 DEFINE LU                 = ExportShipmentCheck
 DEFINE PKG                = EP_Export_Shipment_Check
 
 -----------------------------------------------------------------------------
--- PACKAGE SPECIFICATION:     PURCHASE_ORDER_RPI
+-- PACKAGE SPECIFICATION:     EP_Export_Shipment_Check
 -----------------------------------------------------------------------------
 
 PROMPT Creating &PKG specification
