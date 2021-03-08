@@ -47,9 +47,12 @@ CREATE OR REPLACE PACKAGE &PKG AS
     module_ CONSTANT VARCHAR2(6)   := '&MODULE';
     lu_name_ CONSTANT VARCHAR2(25) := '&LU';
 
-	function Get_Analysis_No(part_no_ in varchar2,
-                           serial_no_ in varchar2,
-                           operation_no_ int) RETURN int;
+    function Update_Point_Value(part_no_ in varchar2,
+                                serial_no_ in varchar2,
+                                operation_no_ in int,
+                                data_point_ in int,
+                                result_ in int,
+                                accuracy_ in int) return varchar2;                           
 
 END &PKG;
 /
@@ -86,8 +89,54 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
             analysis_no_ := -1;                  
         END;
         return analysis_no_;  
-    end;
+    end Get_Analysis_No;
 
+    function Update_Point_Value(part_no_ in varchar2,
+                                serial_no_ in varchar2,
+                                operation_no_ in int,
+                                data_point_ in int,
+                                result_ in int,
+                                accuracy_ in int ) return varchar2
+    is
+        analysis_no_ int; 
+        info_ varchar2(1000) := '';
+        
+        report_attr_ varchar2(10000);
+        objid_         QMAN_SAMPLE_VALUE.objid%TYPE;
+        objversion_    QMAN_SAMPLE_VALUE.objversion%TYPE;    
+    begin
+        analysis_no_ := Get_Analysis_No(part_no_, serial_no_, operation_no_);
+        if(analysis_no_ = -1) then
+          info_ := 'Analysis not found';
+          return info_;
+        end if;
+        Select ObjID into objid_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_;
+        select objversion into objversion_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_;
+        if ((objid_ IS NULL)  OR (objversion_ is null)) then
+            info_ := 'Data Point Not found for point: ' || data_point_;
+            return info_;
+        end if;
+        client_sys.Add_To_Attr('RESULT', result_, report_attr_);
+        client_sys.Add_To_Attr('ACCURACY', accuracy_ ,report_attr_);
+        dbms_output.put_line('report_attr: ' || report_attr_);
+        BEGIN
+            SAVEPOINT do_insert;
+            dbms_output.put_line('info_: ' || info_);
+            QMAN_SAMPLE_VALUE_API.MODIFY__(info_, objid_,
+                objversion_, report_attr_, 'DO');
+            if ((info_ is null) or (length(info_) = 0)) then
+              info_ := 'Success updating point: ' || data_point_  || ' with value: ' || result_;
+            end if;
+            commit;
+        EXCEPTION 
+        WHEN OTHERS THEN 
+            DBMS_OUTPUT.PUT_LINE (SQLERRM);
+            info_ := info_ + '...Error: ' ||SQLERRM;
+            rollback to do_insert; 
+             
+        END;
+        return info_;
+    end Update_Point_Value;
 END &PKG;
 /
 

@@ -13,11 +13,11 @@ DECLARE
 BEGIN
     /* Assign values to IN parameters */
     InParam1 := NULL;
-    Select ObjID into objid_ from qman_sample_value where analysis_no = '26' and data_point = '2';
-    select objversion into objversion_ from qman_sample_value where analysis_no = '26' and data_point = '2';
+    Select ObjID into objid_ from qman_sample_value where analysis_no = '26' and data_point = 2;
+    select objversion into objversion_ from qman_sample_value where analysis_no = '26' and data_point = 2;
 
-    client_sys.Add_To_Attr('RESULT', '403',report_attr_);
-    client_sys.Add_To_Attr('ACCURACY', '0',report_attr_);
+    client_sys.Add_To_Attr('RESULT', 404,report_attr_);
+    client_sys.Add_To_Attr('ACCURACY', 1,report_attr_);
 --OutParam3 := report_attr_;--'RESULT200ACCURACY0'
                            --RESULT203ACCURACY0
 OutParam4 := 'CHECK';
