@@ -1,0 +1,21 @@
+-----------------------------------------------------------------------------
+--
+--  Logical unit: CQualityEndpoint
+--  Component:    CMOD
+--
+--  IFS Developer Studio Template Version 3.0
+--
+--  Date    Sign    History
+--  ------  ------  ---------------------------------------------------------
+-----------------------------------------------------------------------------
+
+layer Cust;
+
+FUNCTION Update_Point_Data___ (
+   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
+IS  
+   InputResponseRec_ Q_A_Input_Response_Rec;
+BEGIN
+   InputResponseRec_.Result := 'Hello From Jonathan';
+   RETURN InputResponseRec_;
+END Update_Point_Data___;

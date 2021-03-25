@@ -1,0 +1,846 @@
+-----------------------------------------------------------------------------
+--
+--  Logical unit: CQualityEndpoint
+--  Type:         Projection
+--  Component:    CMOD
+--
+--  Template:     3.0
+--  Built by:     IFS Developer Studio
+--
+--  NOTE! Do not edit!! This file is completely generated and will be
+--        overwritten next time the corresponding model is saved.
+-----------------------------------------------------------------------------
+
+
+--Storing resulting json metadata in database splitted by indivudual objects
+-- [IFS COMPLETE BLOCK DECLAREEND]
+DECLARE
+   projection_ VARCHAR2(250) := 'CQualityEndpoint';
+   header_     Model_Design_SYS.Fnd_Model_Design_Rec;
+   json_       VARCHAR2(32767);
+BEGIN
+   header_ := Model_Design_SYS.Prepare_Design_Data_Load('projection', projection_, Model_Design_SYS.SERVER_METADATA,
+      'Quality Assurance Rest API');
+   json_ := '{"projection": {"Name": "CQualityEndpoint","Metadata": {"Version": "[#[generate:version]#]","Description": "Quality Assurance Rest API","Category": ["Integration"]},"Container": {"EntitySets": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Singletons": [],"Actions": [{"Name": "UpdatePointData","DataType": "Structure","SubType": "QAInputResponse","Collection": false,"Parameters": [{"Name": "QAInputRequest","DataType": "Structure","SubType": "QAInputRequest","Collection": false,"Nullable": false}],"Execute": {"PL-SQL": {"MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:QAInputRequest, unbound## => '''')","ReturnType": "C_Quality_Endpoint_SVC.Q_A_Input_Response_Art","Bind": [{"Kind": "Parameter","Name": "QAInputRequest","ImplementationType": "STRUCTURE","SubType": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC"}]}}}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Action_Metadata:{"Projection":"CQualityEndpoint"}]#]],"Functions": []},"Enumerations": [[#[jsoncallback:Custom_Object_Proxy_SYS.Server_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Structures": [{"Name": "QAInputRequest","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC","Attributes": [{"Name": "PartNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "PART_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "SerialNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "SERIAL_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "OperationNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "OPERATION_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "DataPoint","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_POINT","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "DataValue","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_VALUE","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "Accuracy","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "ACCURACY","Execute": {"SQL": {"ImplementationType": "NUMBER"}}}]},{"Name": "QAInputResponse","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_RESPONSE_REC","Attributes": [{"Name": "Result","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "RESULT","Execute": {"SQL": {"Impleme';
+   json_ := json_ || 'ntationType": "VARCHAR2"}}}]},{"Name": "StreamInfoRec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.STREAM_INFO_REC","Attributes": [{"Name": "FileName","DataType": "Text"},{"Name": "MimeType","DataType": "Text"}]},{"Name": "EntityDec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.ENTITY_DEC","Attributes": [{"Name": "ETag","DataType": "Text"},{"Name": "Info","DataType": "Text"},{"Name": "Attr","DataType": "Text"}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Structure_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Entities": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]]}}';
+   Model_Design_SYS.Add_Model_Design_Template(header_, json_);
+   COMMIT;
+END;
+-- [END IFS COMPLETE BLOCK]
+/
+
+-- [IFS COMPLETE BLOCK DECLAREEND]
+DECLARE
+   projection_ VARCHAR2(250) := 'CQualityEndpoint';
+   header_     Model_Design_SYS.Fnd_Model_Design_Rec;
+   json_       VARCHAR2(32767);
+BEGIN
+   header_ := Model_Design_SYS.Prepare_Design_Data_Load('projection', projection_, Model_Design_SYS.CLIENT_METADATA, '');
+   json_ := '{"name": "CQualityEndpoint","service": "CQualityEndpoint.svc","version": "-1112861591","contains": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"enumerations": {[#[jsoncallback:Custom_Object_Proxy_SYS.Client_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"entities": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"structures": {"QAInputRequest": {"name": "QAInputRequest","attributes": {"PartNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"SerialNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"OperationNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataPoint": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataValue": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"Accuracy": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}},"QAInputResponse": {"name": "QAInputResponse","attributes": {"Result": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}}},"actions": {"UpdatePointData": {"name": "UpdatePointData","ludependencies": [],"returnType": {"dataType": "Structure","subType": "QAInputResponse","collection": false},"parameters": [{"Name": "QAInputRequest","DataType": "Structure","SubType": "QAInputRequest","Collection": false,"Nullable": false}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Action_Metadata:{"Projection": "CQualityEndpoint"}]#]},"functions": {},"objectconnections": [#[metacallback:Dynamic_Reference_Metadata_API.Get_Json_Entities_:]#]}';
+   Model_Design_SYS.Add_Model_Design_Template(header_, json_);
+   COMMIT;
+END;
+-- [END IFS COMPLETE BLOCK]
+/
+
+PROMPT Creating C_Quality_Endpoint_SVC specification
+
+-- [IFS COMPLETE BLOCK PACKAGE C_Quality_Endpoint_SVC]
+CREATE OR REPLACE PACKAGE C_Quality_Endpoint_SVC IS
+
+module_  CONSTANT VARCHAR2(25)  := 'CMOD';
+lu_name_ CONSTANT VARCHAR2(250) := 'CQualityEndpoint';
+lu_type_ CONSTANT VARCHAR2(25)  := 'Projection';
+
+-----------------------------------------------------------------------------
+---------------------------- PUBLIC DECLARATIONS ----------------------------
+-----------------------------------------------------------------------------
+
+TYPE Entity_Dec IS RECORD (
+   etag                           VARCHAR2(100),
+   info                           VARCHAR2(4000),
+   attr                           VARCHAR2(32000));
+
+TYPE Entity_Small_Dec IS RECORD (
+   etag                           VARCHAR2(100),
+   info                           VARCHAR2(4000),
+   attr                           VARCHAR2(4000));
+
+TYPE Entity_Small_Drr      IS TABLE OF Entity_Small_Dec;
+
+TYPE Entity_Drr      IS TABLE OF Entity_Dec;
+
+TYPE Objid_Arr       IS TABLE OF VARCHAR2(100);
+
+TYPE Objid_Art       IS TABLE OF VARCHAR2(100);
+
+TYPE Empty_Art       IS TABLE OF VARCHAR2(1);
+
+TYPE Alpha_Arr       IS TABLE OF DATE;
+
+TYPE Alpha_Art       IS TABLE OF DATE;
+
+TYPE Binary_Arr      IS TABLE OF BLOB;
+
+TYPE Binary_Art      IS TABLE OF BLOB;
+
+TYPE Boolean_Arr     IS TABLE OF BOOLEAN;
+
+TYPE Boolean_Art     IS TABLE OF VARCHAR2(5);
+
+TYPE Date_Arr        IS TABLE OF DATE;
+
+TYPE Date_Art        IS TABLE OF DATE;
+
+TYPE Entity_Arr      IS TABLE OF VARCHAR2(100); --List of objid's
+
+TYPE Entity_Art      IS TABLE OF VARCHAR2(100); --List of objid's
+
+TYPE Enumeration_Arr IS TABLE OF VARCHAR2(100);
+
+TYPE Enumeration_Art IS TABLE OF VARCHAR2(100);
+
+TYPE GUID_Arr        IS TABLE OF VARCHAR2(100);
+
+TYPE GUID_Art        IS TABLE OF VARCHAR2(100);
+
+TYPE Identity_Arr    IS TABLE OF VARCHAR2(100);
+
+TYPE Identity_Art    IS TABLE OF VARCHAR2(100);
+
+TYPE Integer_Arr     IS TABLE OF INTEGER;
+
+TYPE Integer_Art     IS TABLE OF INTEGER;
+
+TYPE Long_Text_Arr   IS TABLE OF CLOB;
+
+TYPE Long_Text_Art   IS TABLE OF CLOB;
+
+TYPE Lookup_Arr      IS TABLE OF VARCHAR2(100);
+
+TYPE Lookup_Art      IS TABLE OF VARCHAR2(100);
+
+TYPE Number_Arr      IS TABLE OF NUMBER;
+
+TYPE Number_Art      IS TABLE OF NUMBER;
+
+TYPE Text_Arr        IS TABLE OF VARCHAR2(4000);
+
+TYPE Text_Art        IS TABLE OF VARCHAR2(4000);
+
+TYPE Time_Arr        IS TABLE OF DATE;
+
+TYPE Time_Art        IS TABLE OF DATE;
+
+TYPE Timestamp_Arr   IS TABLE OF DATE;
+
+TYPE Timestamp_Art   IS TABLE OF DATE;
+
+TYPE Stream_Arr      IS TABLE OF BLOB;
+
+TYPE Stream_Art      IS TABLE OF BLOB;
+
+TYPE Stream_Data_Ret IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         BLOB);
+
+TYPE Stream_Data_Art IS TABLE OF Stream_Data_Ret;
+
+TYPE Stream_Data_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         BLOB);
+
+TYPE Stream_Data_Arr IS TABLE OF Stream_Data_Rec;
+
+TYPE Stream_Info_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100));
+
+TYPE Stream_Text_Data_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         CLOB);
+
+TYPE Q_A_Input_Request_Ret IS RECORD (
+   part_no                        VARCHAR2(4000),
+   serial_no                      VARCHAR2(4000),
+   operation_no                   VARCHAR2(4000),
+   data_point                     NUMBER,
+   data_value                     NUMBER,
+   accuracy                       NUMBER);
+
+TYPE Q_A_Input_Request_Art IS TABLE OF Q_A_Input_Request_Ret;
+
+TYPE Q_A_Input_Request_Rec IS RECORD (
+   part_no                        VARCHAR2(4000),
+   serial_no                      VARCHAR2(4000),
+   operation_no                   VARCHAR2(4000),
+   data_point                     NUMBER,
+   data_value                     NUMBER,
+   accuracy                       NUMBER);
+
+TYPE Q_A_Input_Request_Arr IS TABLE OF Q_A_Input_Request_Rec;
+
+TYPE Q_A_Input_Response_Ret IS RECORD (
+   result                         VARCHAR2(4000));
+
+TYPE Q_A_Input_Response_Art IS TABLE OF Q_A_Input_Response_Ret;
+
+TYPE Q_A_Input_Response_Rec IS RECORD (
+   result                         VARCHAR2(4000));
+
+TYPE Q_A_Input_Response_Arr IS TABLE OF Q_A_Input_Response_Rec;
+
+
+-----------------------------------------------------------------------------
+------------------------- METADATA PROVIDER METHODS -------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION Verify_Metadata_Sql_Content_ (
+   metadata_version_ IN VARCHAR2 ) RETURN VARCHAR2;
+
+PROCEDURE Verify_Metadata_Plsql_Content_ (
+   metadata_version_ IN VARCHAR2 );
+
+FUNCTION Get_Metadata_Content_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN CLOB;
+
+FUNCTION Get_Metadata_Version_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2;
+
+FUNCTION Get_Metadata_Category_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2;
+
+FUNCTION Get_Metadata_Service_Group_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2;
+
+-----------------------------------------------------------------------------
+------------------------------- GLOBAL METHODS ------------------------------
+-----------------------------------------------------------------------------
+--@PoReadOnly(Do_Update_Point_Data)
+FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art;
+
+END C_Quality_Endpoint_SVC;
+-- [END IFS COMPLETE BLOCK]
+/
+SHOW ERROR
+
+PROMPT Creating C_Quality_Endpoint_SVC implementation
+
+-- [IFS COMPLETE BLOCK PACKAGEBODY C_Quality_Endpoint_SVC]
+CREATE OR REPLACE PACKAGE BODY C_Quality_Endpoint_SVC IS
+
+-----------------------------------------------------------------------------
+---------------------------- PRIVATE DECLARATIONS ---------------------------
+-----------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------
+------------------------- METADATA PROVIDER METHODS -------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION Verify_Metadata_Sql_Content_ (
+   metadata_version_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+BEGIN
+   Verify_Metadata_Plsql_Content_(metadata_version_);
+   RETURN 'OK';
+END Verify_Metadata_Sql_Content_;
+
+
+PROCEDURE Verify_Metadata_Plsql_Content_ (
+   metadata_version_ IN VARCHAR2 )
+IS
+BEGIN
+   IF (metadata_version_ != Get_Metadata_Version_) THEN
+      Raise_Application_Error(-20187, 'OLDMETA: Metadata mismatch, reload with C_Quality_Endpoint_SVC.Get_Metadata_Content_ and execute again.');
+   END IF;
+END Verify_Metadata_Plsql_Content_;
+
+
+FUNCTION Get_Metadata_Content_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN CLOB
+IS
+BEGIN
+   IF (context_ IS NULL) THEN
+      RETURN Model_Design_SYS.Get_Data_Content_(Model_Design_SYS.SERVER_METADATA, 'projection', 'CQualityEndpoint', language_ => Fnd_Session_API.Get_Language);
+   ELSE
+      RETURN Model_Design_SYS.Get_Data_Content_(Model_Design_SYS.SERVER_METADATA, 'projection', 'CQualityEndpoint', language_ => Fnd_Session_API.Get_Language, scope_id_ => context_);
+   END IF;
+END Get_Metadata_Content_;
+
+
+FUNCTION Get_Metadata_Category_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2
+IS
+   projection_category_  VARCHAR2(100);
+BEGIN
+   projection_category_ := 'Integration';
+   RETURN projection_category_;
+END Get_Metadata_Category_;
+
+
+FUNCTION Get_Metadata_Service_Group_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2
+IS
+   projection_service_group_  VARCHAR2(100);
+BEGIN
+   projection_service_group_ := 'Default';
+   RETURN projection_service_group_;
+END Get_Metadata_Service_Group_;
+
+
+FUNCTION Get_Metadata_Version_ (
+   context_ IN VARCHAR2 DEFAULT NULL ) RETURN VARCHAR2
+IS
+BEGIN
+   RETURN Model_Design_SYS.Get_Data_Version_(Model_Design_SYS.SERVER_METADATA, 'projection', 'CQualityEndpoint');
+END Get_Metadata_Version_;
+
+
+-----------------------------------------------------------------------------
+--------------------- IMPLEMENTATION METHOD DECLARATIONS --------------------
+-----------------------------------------------------------------------------
+
+FUNCTION Get_Objid_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2;
+
+FUNCTION Get_Objversion_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2;
+
+FUNCTION Get_Etag___ (
+   objid_      IN VARCHAR2,
+   objversion_ IN VARCHAR2 ) RETURN VARCHAR2;
+
+FUNCTION Combine_Value_Unit___ (
+   value_ IN VARCHAR2,
+   unit_  IN VARCHAR2 ) RETURN VARCHAR2;
+
+PROCEDURE Cf_CRUD___(
+   lu_name_   IN     VARCHAR2,
+   lu_type_   IN     VARCHAR2,
+   info_         OUT VARCHAR2,
+   objid_     IN     VARCHAR2,
+   attr_cf_   IN OUT NOCOPY VARCHAR2,
+   attr_      IN     VARCHAR2,
+   action_    IN     VARCHAR2,
+   operation_ IN     VARCHAR2);
+
+FUNCTION To_Base64___(blob_ BLOB) RETURN CLOB;
+
+FUNCTION To_Ret____ (
+   rec_ IN BOOLEAN ) RETURN VARCHAR2;
+
+FUNCTION To_Ret____ (
+   rec_ IN DATE ) RETURN DATE;
+
+FUNCTION To_Ret____ (
+   rec_ IN VARCHAR2 ) RETURN VARCHAR2;
+
+FUNCTION To_Ret____ (
+   rec_ IN CLOB ) RETURN CLOB;
+
+FUNCTION To_Ret____ (
+   rec_ IN BLOB ) RETURN BLOB;
+
+FUNCTION To_Ret____ (
+   rec_ IN Stream_Data_Rec ) RETURN Stream_Data_Ret;
+
+FUNCTION To_Ret____ (
+   arr_ IN Stream_Data_Arr ) RETURN Stream_Data_Art;
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret;
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art;
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret;
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art;
+
+FUNCTION To_Boolean____ (
+   rec_ IN VARCHAR2 ) RETURN BOOLEAN;
+
+FUNCTION To_Boolean_Arr____ (
+   arr_ IN Text_Arr ) RETURN Boolean_Arr;
+
+FUNCTION Update_Point_Data___ (
+   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec;
+
+-----------------------------------------------------------------------------
+-------------------- GLOBAL METHODS -----------------------------------------
+-----------------------------------------------------------------------------
+
+--@IgnoreMissingSysinit
+FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+IS
+   
+   FUNCTION Base(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+   IS
+      rec_ Q_A_Input_Response_Rec;
+      art_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+   BEGIN
+      Log_SYS.Init_Method('C_Quality_Endpoint_SVC', 'Do_Update_Point_Data');
+      rec_ := Update_Point_Data___(q_a_input_request_);
+      art_.extend();
+      art_(1) := To_Ret____(rec_);
+      RETURN art_;
+   END Base;
+
+BEGIN
+   RETURN Base(q_a_input_request_, unbound##);
+END Do_Update_Point_Data;
+
+-----------------------------------------------------------------------------
+-------------------- HELPER METHODS -----------------------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION Get_Objid_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      etag_ IN VARCHAR2 ) RETURN VARCHAR2
+   IS
+      delim_pos_ INTEGER := instr(etag_, ':');
+   BEGIN
+      RETURN substr(etag_, 4, delim_pos_-4);
+   END Base;
+
+BEGIN
+   RETURN Base(etag_);
+END Get_Objid_From_Etag___;
+
+
+FUNCTION Get_Objversion_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      etag_ IN VARCHAR2 ) RETURN VARCHAR2
+   IS
+      delim_pos_ INTEGER := instr(etag_, ':');
+   BEGIN
+      RETURN substr(etag_, delim_pos_+1, length(etag_)-delim_pos_-1);
+   END Base;
+
+BEGIN
+   RETURN Base(etag_);
+END Get_Objversion_From_Etag___;
+
+
+FUNCTION Get_Etag___ (
+   objid_      IN VARCHAR2,
+   objversion_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      objid_      IN VARCHAR2,
+      objversion_ IN VARCHAR2 ) RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN 'W/"'||objid_||':'||objversion_||'"';
+   END Base;
+
+BEGIN
+   RETURN Base(objid_, objversion_);
+END Get_Etag___;
+
+
+FUNCTION Combine_Value_Unit___ (
+   value_ IN VARCHAR2,
+   unit_  IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      value_ IN VARCHAR2,
+      unit_  IN VARCHAR2 ) RETURN VARCHAR2
+   IS
+   BEGIN
+      IF (value_ IS NULL) THEN
+         RETURN NULL;
+      ELSE
+         RETURN value_||'|'||unit_;
+      END IF;
+   END Base;
+
+BEGIN
+   RETURN Base(value_, unit_);
+END Combine_Value_Unit___;
+
+
+PROCEDURE Cf_CRUD___(
+   lu_name_   IN     VARCHAR2,
+   lu_type_   IN     VARCHAR2,
+   info_         OUT VARCHAR2,
+   objid_     IN     VARCHAR2,
+   attr_cf_   IN OUT NOCOPY VARCHAR2,
+   attr_      IN     VARCHAR2,
+   action_    IN     VARCHAR2,
+   operation_ IN     VARCHAR2)
+IS
+   
+   PROCEDURE Base(
+      lu_name_   IN     VARCHAR2,
+      lu_type_   IN     VARCHAR2,
+      info_         OUT VARCHAR2,
+      objid_     IN     VARCHAR2,
+      attr_cf_   IN OUT NOCOPY VARCHAR2,
+      attr_      IN     VARCHAR2,
+      action_    IN     VARCHAR2,
+      operation_ IN     VARCHAR2)
+   IS
+   BEGIN
+      Custom_Object_Proxy_SYS.Cf_Crud(lu_name_, lu_type_, info_, objid_, attr_cf_, attr_, action_, operation_);
+   END Base;
+
+BEGIN
+   Base(lu_name_, lu_type_, info_, objid_, attr_cf_, attr_, action_, operation_);
+END Cf_CRUD___;
+
+
+FUNCTION To_Base64___(blob_ BLOB) RETURN CLOB
+IS
+   
+   FUNCTION Base(blob_ BLOB) RETURN CLOB
+   IS
+      clob_ CLOB;
+      step_ PLS_INTEGER := 12000; -- must be a multiple of 3 not higher than 24573
+   BEGIN
+      IF blob_ IS NULL OR Dbms_Lob.GetLength(blob_) = 0 THEN
+         RETURN NULL;
+      END IF;
+      FOR i IN 0..trunc((Dbms_Lob.GetLength(blob_) - 1)/step_) LOOP
+         clob_ := clob_ || Utl_Raw.Cast_To_Varchar2(Utl_Encode.Base64_Encode(Dbms_Lob.Substr(blob_, step_, i * step_ + 1)));
+      END LOOP;
+      RETURN clob_;
+   END Base;
+
+BEGIN
+   RETURN Base(blob_);
+END To_Base64___;
+
+-----------------------------------------------------------------------------
+-------------------- CONVERSION METHODS -------------------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION To_Ret____ (
+   rec_ IN BOOLEAN ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      rec_ IN BOOLEAN ) RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN (CASE rec_ WHEN TRUE THEN 'TRUE' WHEN FALSE THEN 'FALSE' ELSE NULL END);
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN DATE ) RETURN DATE
+IS
+   
+   FUNCTION Base (
+      rec_ IN DATE ) RETURN DATE
+   IS
+   BEGIN
+      RETURN rec_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   
+   FUNCTION Base (
+      rec_ IN VARCHAR2 ) RETURN VARCHAR2
+   IS
+   BEGIN
+      RETURN rec_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN CLOB ) RETURN CLOB
+IS
+   
+   FUNCTION Base (
+      rec_ IN CLOB ) RETURN CLOB
+   IS
+   BEGIN
+      RETURN rec_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN BLOB ) RETURN BLOB
+IS
+   
+   FUNCTION Base (
+      rec_ IN BLOB ) RETURN BLOB
+   IS
+   BEGIN
+      RETURN rec_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN Stream_Data_Rec ) RETURN Stream_Data_Ret
+IS
+   
+   FUNCTION Base (
+      rec_ IN Stream_Data_Rec ) RETURN Stream_Data_Ret
+   IS
+      ret_ Stream_Data_Ret;
+   BEGIN
+      ret_.file_name := To_Ret____(rec_.file_name);
+      ret_.mime_type := To_Ret____(rec_.mime_type);
+      ret_.stream_data := To_Ret____(rec_.stream_data);
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   arr_ IN Stream_Data_Arr ) RETURN Stream_Data_Art
+IS
+   
+   FUNCTION Base (
+      arr_ IN Stream_Data_Arr ) RETURN Stream_Data_Art
+   IS
+      ret_ Stream_Data_Art;
+   BEGIN
+         IF (arr_.count > 0) THEN
+            FOR i IN arr_.first .. arr_.last LOOP
+            ret_.extend;
+            ret_(ret_.last) := To_Ret____(arr_(i));
+            END LOOP;
+         END IF;
+         RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(arr_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+IS
+   
+   FUNCTION Base (
+      rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+   IS
+      ret_ Q_A_Input_Request_Ret;
+   BEGIN
+      ret_.part_no                        := To_Ret____(rec_.part_no);
+      ret_.serial_no                      := To_Ret____(rec_.serial_no);
+      ret_.operation_no                   := To_Ret____(rec_.operation_no);
+      ret_.data_point                     := To_Ret____(rec_.data_point);
+      ret_.data_value                     := To_Ret____(rec_.data_value);
+      ret_.accuracy                       := To_Ret____(rec_.accuracy);
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+IS
+   
+   FUNCTION Base (
+      arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+   IS
+      ret_ Q_A_Input_Request_Art := Q_A_Input_Request_Art();
+   BEGIN
+      IF (arr_.count > 0) THEN
+         FOR i IN arr_.first .. arr_.last LOOP
+         ret_.extend;
+         ret_(ret_.last) := To_Ret____(arr_(i));
+         END LOOP;
+      END IF;
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(arr_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+IS
+   
+   FUNCTION Base (
+      rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+   IS
+      ret_ Q_A_Input_Response_Ret;
+   BEGIN
+      ret_.result                         := To_Ret____(rec_.result);
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+IS
+   
+   FUNCTION Base (
+      arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+   IS
+      ret_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+   BEGIN
+      IF (arr_.count > 0) THEN
+         FOR i IN arr_.first .. arr_.last LOOP
+         ret_.extend;
+         ret_(ret_.last) := To_Ret____(arr_(i));
+         END LOOP;
+      END IF;
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(arr_);
+END To_Ret____;
+
+
+FUNCTION To_Boolean____ (
+   rec_ IN VARCHAR2 ) RETURN BOOLEAN
+IS
+   
+   FUNCTION Base (
+      rec_ IN VARCHAR2 ) RETURN BOOLEAN
+   IS
+   
+      FUNCTION Base (
+         rec_ IN VARCHAR2 ) RETURN BOOLEAN
+      IS
+      BEGIN
+         RETURN (CASE rec_ WHEN 'TRUE' THEN TRUE WHEN 'FALSE' THEN FALSE ELSE NULL END);
+      END Base;
+   
+   BEGIN
+      RETURN Base(rec_);
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Boolean____;
+
+
+FUNCTION To_Boolean_Arr____ (
+   arr_ IN Text_Arr ) RETURN Boolean_Arr
+IS
+   
+   FUNCTION Base (
+      arr_ IN Text_Arr ) RETURN Boolean_Arr
+   IS
+   
+      FUNCTION Base (
+         arr_ IN Text_Arr ) RETURN Boolean_Arr
+      IS
+         ret_ Boolean_Arr := Boolean_Arr();
+      BEGIN
+         IF (arr_.count > 0) THEN
+            FOR i IN arr_.first .. arr_.last LOOP
+            ret_.extend;
+            ret_(ret_.last) := To_Boolean____(arr_(i));
+            END LOOP;
+         END IF;
+         RETURN ret_;
+      END Base;
+   
+   BEGIN
+      RETURN Base(arr_);
+   END Base;
+
+BEGIN
+   RETURN Base(arr_);
+END To_Boolean_Arr____;
+
+-----------------------------------------------------------------------------
+-------------------- TOP ----------------------------------------------------
+-----------------------------------------------------------------------------
+
+FUNCTION Update_Point_Data___ (
+   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
+IS
+   
+   FUNCTION Cust_Projection_CQualityEndpoint (
+      q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
+   IS  
+      InputResponseRec_ Q_A_Input_Response_Rec;
+   BEGIN
+      InputResponseRec_.Result := 'Hello From Jonathan';
+      RETURN InputResponseRec_;
+   END Cust_Projection_CQualityEndpoint;
+
+BEGIN
+   RETURN Cust_Projection_CQualityEndpoint(q_a_input_request_);
+END Update_Point_Data___;
+
+END C_Quality_Endpoint_SVC;
+-- [END IFS COMPLETE BLOCK]
+/
+SHOW ERROR
+
+GRANT EXECUTE ON C_Quality_Endpoint_SVC TO IFSSYS
+/
+
+-- [IFS COMPLETE BLOCK BEGINEND]
+DECLARE
+   projection_ VARCHAR2(250) := 'CQualityEndpoint';
+BEGIN
+   Fnd_Projection_API.Create_Or_Replace(projection_, description_ => 'Quality Assurance Rest API', categories_ => 'Integration', component_ => 'CMOD', layer_  => 'Cust', plsql_package_ => 'C_QUALITY_ENDPOINT_SVC', api_class_ => 'Standard', deprecated_ => 'FALSE');
+   Fnd_Proj_Action_API.Create_Or_Replace(projection_, 'UpdatePointData');
+
+   COMMIT;
+END;
+-- [END IFS COMPLETE BLOCK]
+/
+
+-----------------------------------------------------------------------------
+-------------------------- REFRESH DICTIONARY CACHE -------------------------
+-----------------------------------------------------------------------------
+
+-- [IFS COMPLETE BLOCK BEGINEND]
+BEGIN
+    Dictionary_SYS.Refresh_Odata_Projection_Cache('CQualityEndpoint');
+END;
+-- [END IFS COMPLETE BLOCK]
+/

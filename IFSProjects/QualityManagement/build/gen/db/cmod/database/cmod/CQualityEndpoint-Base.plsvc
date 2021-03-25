@@ -1,0 +1,393 @@
+-----------------------------------------------------------------------------
+--
+--  Logical unit: CQualityEndpoint
+--  Type:         Projection
+--  Component:    CMOD
+--
+--  Template:     3.0
+--  Built by:     IFS Developer Studio
+--
+--  Purpose:      Projection facing PL/SQL Base document
+--
+--  NOTE! Do not edit!! This file is completely generated and will be
+--        overwritten next time the corresponding model is saved.
+-----------------------------------------------------------------------------
+
+layer Base;
+
+-------------------- PUBLIC DECLARATIONS ------------------------------------
+
+TYPE Entity_Dec IS RECORD (
+   etag                           VARCHAR2(100),
+   info                           VARCHAR2(4000),
+   attr                           VARCHAR2(32000));
+
+TYPE Entity_Small_Dec IS RECORD (
+   etag                           VARCHAR2(100),
+   info                           VARCHAR2(4000),
+   attr                           VARCHAR2(4000));
+
+TYPE Entity_Small_Drr      IS TABLE OF Entity_Small_Dec;
+TYPE Entity_Drr      IS TABLE OF Entity_Dec;
+TYPE Objid_Arr       IS TABLE OF VARCHAR2(100);
+TYPE Objid_Art       IS TABLE OF VARCHAR2(100);
+TYPE Empty_Art       IS TABLE OF VARCHAR2(1);
+
+TYPE Alpha_Arr       IS TABLE OF DATE;
+TYPE Alpha_Art       IS TABLE OF DATE;
+TYPE Binary_Arr      IS TABLE OF BLOB;
+TYPE Binary_Art      IS TABLE OF BLOB;
+TYPE Boolean_Arr     IS TABLE OF BOOLEAN;
+TYPE Boolean_Art     IS TABLE OF VARCHAR2(5);
+TYPE Date_Arr        IS TABLE OF DATE;
+TYPE Date_Art        IS TABLE OF DATE;
+TYPE Entity_Arr      IS TABLE OF VARCHAR2(100); --List of objid's
+TYPE Entity_Art      IS TABLE OF VARCHAR2(100); --List of objid's
+TYPE Enumeration_Arr IS TABLE OF VARCHAR2(100);
+TYPE Enumeration_Art IS TABLE OF VARCHAR2(100);
+TYPE GUID_Arr        IS TABLE OF VARCHAR2(100);
+TYPE GUID_Art        IS TABLE OF VARCHAR2(100);
+TYPE Identity_Arr    IS TABLE OF VARCHAR2(100);
+TYPE Identity_Art    IS TABLE OF VARCHAR2(100);
+TYPE Integer_Arr     IS TABLE OF INTEGER;
+TYPE Integer_Art     IS TABLE OF INTEGER;
+TYPE Long_Text_Arr   IS TABLE OF CLOB;
+TYPE Long_Text_Art   IS TABLE OF CLOB;
+TYPE Lookup_Arr      IS TABLE OF VARCHAR2(100);
+TYPE Lookup_Art      IS TABLE OF VARCHAR2(100);
+TYPE Number_Arr      IS TABLE OF NUMBER;
+TYPE Number_Art      IS TABLE OF NUMBER;
+TYPE Text_Arr        IS TABLE OF VARCHAR2(4000);
+TYPE Text_Art        IS TABLE OF VARCHAR2(4000);
+TYPE Time_Arr        IS TABLE OF DATE;
+TYPE Time_Art        IS TABLE OF DATE;
+TYPE Timestamp_Arr   IS TABLE OF DATE;
+TYPE Timestamp_Art   IS TABLE OF DATE;
+TYPE Stream_Arr      IS TABLE OF BLOB;
+TYPE Stream_Art      IS TABLE OF BLOB;
+
+TYPE Stream_Data_Ret IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         BLOB);
+
+TYPE Stream_Data_Art IS TABLE OF Stream_Data_Ret;
+
+TYPE Stream_Data_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         BLOB);
+
+TYPE Stream_Data_Arr IS TABLE OF Stream_Data_Rec;
+
+TYPE Stream_Info_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100));
+
+TYPE Stream_Text_Data_Rec IS RECORD (
+   file_name                           VARCHAR2(100),
+   mime_type                           VARCHAR2(100),
+   stream_data                         CLOB);
+
+TYPE Q_A_Input_Request_Ret IS RECORD (
+   part_no                        VARCHAR2(4000),
+   serial_no                      VARCHAR2(4000),
+   operation_no                   VARCHAR2(4000),
+   data_point                     NUMBER,
+   data_value                     NUMBER,
+   accuracy                       NUMBER);
+
+TYPE Q_A_Input_Request_Art IS TABLE OF Q_A_Input_Request_Ret;
+
+TYPE Q_A_Input_Request_Rec IS RECORD (
+   part_no                        VARCHAR2(4000),
+   serial_no                      VARCHAR2(4000),
+   operation_no                   VARCHAR2(4000),
+   data_point                     NUMBER,
+   data_value                     NUMBER,
+   accuracy                       NUMBER);
+
+TYPE Q_A_Input_Request_Arr IS TABLE OF Q_A_Input_Request_Rec;
+
+TYPE Q_A_Input_Response_Ret IS RECORD (
+   result                         VARCHAR2(4000));
+
+TYPE Q_A_Input_Response_Art IS TABLE OF Q_A_Input_Response_Ret;
+
+TYPE Q_A_Input_Response_Rec IS RECORD (
+   result                         VARCHAR2(4000));
+
+TYPE Q_A_Input_Response_Arr IS TABLE OF Q_A_Input_Response_Rec;
+
+-------------------- PRIVATE DECLARATIONS -----------------------------------
+
+
+
+-------------------- HELPER METHODS -----------------------------------------
+
+@Final
+FUNCTION Get_Objid_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   delim_pos_ INTEGER := instr(etag_, ':');
+BEGIN
+   RETURN substr(etag_, 4, delim_pos_-4);
+END Get_Objid_From_Etag___;
+
+
+@Final
+FUNCTION Get_Objversion_From_Etag___ (
+   etag_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+   delim_pos_ INTEGER := instr(etag_, ':');
+BEGIN
+   RETURN substr(etag_, delim_pos_+1, length(etag_)-delim_pos_-1);
+END Get_Objversion_From_Etag___;
+
+
+@Final
+FUNCTION Get_Etag___ (
+   objid_      IN VARCHAR2,
+   objversion_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+BEGIN
+   RETURN 'W/"'||objid_||':'||objversion_||'"';
+END Get_Etag___;
+
+
+@Final
+FUNCTION Combine_Value_Unit___ (
+   value_ IN VARCHAR2,
+   unit_  IN VARCHAR2 ) RETURN VARCHAR2
+IS
+BEGIN
+   IF (value_ IS NULL) THEN
+      RETURN NULL;
+   ELSE
+      RETURN value_||'|'||unit_;
+   END IF;
+END Combine_Value_Unit___;
+
+@Final
+PROCEDURE Cf_CRUD___(
+   lu_name_   IN     VARCHAR2,
+   lu_type_   IN     VARCHAR2,
+   info_         OUT VARCHAR2,
+   objid_     IN     VARCHAR2,
+   attr_cf_   IN OUT VARCHAR2,
+   attr_      IN     VARCHAR2,
+   action_    IN     VARCHAR2,
+   operation_ IN     VARCHAR2)
+IS
+BEGIN
+   Custom_Object_Proxy_SYS.Cf_Crud(lu_name_, lu_type_, info_, objid_, attr_cf_, attr_, action_, operation_);
+END Cf_CRUD___;
+
+-- Encode BLOB value with Base64
+FUNCTION To_Base64___(blob_ BLOB) RETURN CLOB
+IS
+   clob_ CLOB;
+   step_ PLS_INTEGER := 12000; -- must be a multiple of 3 not higher than 24573
+BEGIN
+   IF blob_ IS NULL OR Dbms_Lob.GetLength(blob_) = 0 THEN
+      RETURN NULL;
+   END IF;
+   FOR i IN 0..trunc((Dbms_Lob.GetLength(blob_) - 1)/step_) LOOP
+      clob_ := clob_ || Utl_Raw.Cast_To_Varchar2(Utl_Encode.Base64_Encode(Dbms_Lob.Substr(blob_, step_, i * step_ + 1)));
+   END LOOP;
+   RETURN clob_;
+END To_Base64___;
+
+-------------------- CONVERSION METHODS -------------------------------------
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN BOOLEAN ) RETURN VARCHAR2
+IS
+BEGIN
+   RETURN (CASE rec_ WHEN TRUE THEN 'TRUE' WHEN FALSE THEN 'FALSE' ELSE NULL END);
+END To_Ret____;
+
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN DATE ) RETURN DATE
+IS
+BEGIN
+   RETURN rec_;
+END To_Ret____;
+
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN VARCHAR2 ) RETURN VARCHAR2
+IS
+BEGIN
+   RETURN rec_;
+END To_Ret____;
+
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN CLOB ) RETURN CLOB
+IS
+BEGIN
+   RETURN rec_;
+END To_Ret____;
+
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN BLOB ) RETURN BLOB
+IS
+BEGIN
+   RETURN rec_;
+END To_Ret____;
+
+@Final
+FUNCTION To_Ret____ (
+   rec_ IN Stream_Data_Rec ) RETURN Stream_Data_Ret
+IS
+   ret_ Stream_Data_Ret;
+BEGIN
+   ret_.file_name := To_Ret____(rec_.file_name);
+   ret_.mime_type := To_Ret____(rec_.mime_type);
+   ret_.stream_data := To_Ret____(rec_.stream_data);
+   RETURN ret_;
+END To_Ret____;
+
+FUNCTION To_Ret____ (
+   arr_ IN Stream_Data_Arr ) RETURN Stream_Data_Art
+IS
+   ret_ Stream_Data_Art;
+BEGIN
+      IF (arr_.count > 0) THEN
+         FOR i IN arr_.first .. arr_.last LOOP
+         ret_.extend;
+         ret_(ret_.last) := To_Ret____(arr_(i));
+         END LOOP;
+      END IF;
+      RETURN ret_;
+END To_Ret____;
+
+FUNCTION To_Boolean____ (
+   rec_ IN VARCHAR2 ) RETURN BOOLEAN
+IS
+
+   FUNCTION Base (
+      rec_ IN VARCHAR2 ) RETURN BOOLEAN
+   IS
+   BEGIN
+      RETURN (CASE rec_ WHEN 'TRUE' THEN TRUE WHEN 'FALSE' THEN FALSE ELSE NULL END);
+   END Base;
+
+BEGIN
+   RETURN Base(rec_);
+END To_Boolean____;
+
+FUNCTION To_Boolean_Arr____ (
+   arr_ IN Text_Arr ) RETURN Boolean_Arr
+IS
+
+   FUNCTION Base (
+      arr_ IN Text_Arr ) RETURN Boolean_Arr
+   IS
+      ret_ Boolean_Arr := Boolean_Arr();
+   BEGIN
+      IF (arr_.count > 0) THEN
+         FOR i IN arr_.first .. arr_.last LOOP
+         ret_.extend;
+         ret_(ret_.last) := To_Boolean____(arr_(i));
+         END LOOP;
+      END IF;
+      RETURN ret_;
+   END Base;
+
+BEGIN
+   RETURN Base(arr_);
+END To_Boolean_Arr____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+IS
+   ret_ Q_A_Input_Request_Ret;
+BEGIN
+   ret_.part_no                        := To_Ret____(rec_.part_no);
+   ret_.serial_no                      := To_Ret____(rec_.serial_no);
+   ret_.operation_no                   := To_Ret____(rec_.operation_no);
+   ret_.data_point                     := To_Ret____(rec_.data_point);
+   ret_.data_value                     := To_Ret____(rec_.data_value);
+   ret_.accuracy                       := To_Ret____(rec_.accuracy);
+   RETURN ret_;
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+IS
+   ret_ Q_A_Input_Request_Art := Q_A_Input_Request_Art();
+BEGIN
+   IF (arr_.count > 0) THEN
+      FOR i IN arr_.first .. arr_.last LOOP
+      ret_.extend;
+      ret_(ret_.last) := To_Ret____(arr_(i));
+      END LOOP;
+   END IF;
+   RETURN ret_;
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+IS
+   ret_ Q_A_Input_Response_Ret;
+BEGIN
+   ret_.result                         := To_Ret____(rec_.result);
+   RETURN ret_;
+END To_Ret____;
+
+
+FUNCTION To_Ret____ (
+   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+IS
+   ret_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+BEGIN
+   IF (arr_.count > 0) THEN
+      FOR i IN arr_.first .. arr_.last LOOP
+      ret_.extend;
+      ret_(ret_.last) := To_Ret____(arr_(i));
+      END LOOP;
+   END IF;
+   RETURN ret_;
+END To_Ret____;
+
+
+-------------------- GLOBAL METHODS -----------------------------------------
+@Final
+@UncheckedAccess
+
+@Final
+@UncheckedAccess
+FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+IS
+   rec_ Q_A_Input_Response_Rec;
+   art_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+BEGIN
+   Log_SYS.Init_Method('C_Quality_Endpoint_SVC', 'Do_Update_Point_Data');
+   rec_ := Update_Point_Data___(q_a_input_request_);
+   art_.extend();
+   art_(1) := To_Ret____(rec_);
+   RETURN art_;
+END Do_Update_Point_Data;
+
+@ProjectionGenerated
+FUNCTION Update_Point_Data___ (
+   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec;
+
+
+
+
+-------------------- COMPLEX STRUCTURE METHODS ------------------------------------
+
+

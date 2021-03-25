@@ -1,0 +1,185 @@
+{
+    "projection": {
+        "Name": "CQualityEndpoint",
+        "Metadata": {
+            "Version": "[#[generate:version]#]",
+            "Description": "Quality Assurance Rest API",
+            "Category": [
+                "Integration"
+            ]
+        },
+        "Container": {
+            "EntitySets": [
+            ],
+            "Singletons": [
+            ],
+            "Actions": [
+                {
+                    "Name": "UpdatePointData",
+                    "DataType": "Structure",
+                    "SubType": "QAInputResponse",
+                    "Collection": false,
+                    "Parameters": [
+                        {
+                            "Name": "QAInputRequest",
+                            "DataType": "Structure",
+                            "SubType": "QAInputRequest",
+                            "Collection": false,
+                            "Nullable": false
+                        }
+                    ],
+                    "Execute": {
+                        "PL-SQL": {
+                            "MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:QAInputRequest, unbound## => '')",
+                            "ReturnType": "C_Quality_Endpoint_SVC.Q_A_Input_Response_Art",
+                            "Bind": [
+                                {
+                                    "Kind": "Parameter",
+                                    "Name": "QAInputRequest",
+                                    "ImplementationType": "STRUCTURE",
+                                    "SubType": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "Functions": [
+            ]
+        },
+        "Enumerations": [
+        ],
+        "Structures": [
+            {
+                "Name": "QAInputRequest",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC",
+                "Attributes": [
+                    {
+                        "Name": "PartNo",
+                        "DataType": "Text",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "PART_NO",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "VARCHAR2"
+                            }
+                        }
+                    },
+                    {
+                        "Name": "SerialNo",
+                        "DataType": "Text",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "SERIAL_NO",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "VARCHAR2"
+                            }
+                        }
+                    },
+                    {
+                        "Name": "OperationNo",
+                        "DataType": "Text",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "OPERATION_NO",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "VARCHAR2"
+                            }
+                        }
+                    },
+                    {
+                        "Name": "DataPoint",
+                        "DataType": "Number",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "DATA_POINT",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "NUMBER"
+                            }
+                        }
+                    },
+                    {
+                        "Name": "DataValue",
+                        "DataType": "Number",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "DATA_VALUE",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "NUMBER"
+                            }
+                        }
+                    },
+                    {
+                        "Name": "Accuracy",
+                        "DataType": "Number",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "ACCURACY",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "NUMBER"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "Name": "QAInputResponse",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_RESPONSE_REC",
+                "Attributes": [
+                    {
+                        "Name": "Result",
+                        "DataType": "Text",
+                        "Collection": false,
+                        "Nullable": true,
+                        "AttrName": "RESULT",
+                        "Execute": {
+                            "SQL": {
+                                "ImplementationType": "VARCHAR2"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "Name": "StreamInfoRec",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.STREAM_INFO_REC",
+                "Attributes": [
+                    {
+                        "Name": "FileName",
+                        "DataType": "Text"
+                    },
+                    {
+                        "Name": "MimeType",
+                        "DataType": "Text"
+                    }
+                ]
+            },
+            {
+                "Name": "EntityDec",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.ENTITY_DEC",
+                "Attributes": [
+                    {
+                        "Name": "ETag",
+                        "DataType": "Text"
+                    },
+                    {
+                        "Name": "Info",
+                        "DataType": "Text"
+                    },
+                    {
+                        "Name": "Attr",
+                        "DataType": "Text"
+                    }
+                ]
+            }
+        ],
+        "Entities": [
+        ]
+    }
+}

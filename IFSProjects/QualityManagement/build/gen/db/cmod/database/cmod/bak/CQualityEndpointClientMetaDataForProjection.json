@@ -1,0 +1,132 @@
+{
+    "name": "CQualityEndpoint",
+    "service": "CQualityEndpoint.svc",
+    "version": "-1112861591",
+    "contains": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entityset_Metadata:{
+    "Projection": "CQualityEndpoint",
+    "Lu": [
+    ]
+}]#]
+    },
+    "enumerations": {[#[jsoncallback:Custom_Object_Proxy_SYS.Client_Enumeration_Metadata:{
+    "Projection": "CQualityEndpoint",
+    "Lu": [
+    ]
+}]#]
+    },
+    "entities": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entity_Type_Metadata:{
+    "Projection": "CQualityEndpoint",
+    "Lu": [
+    ]
+}]#]
+    },
+    "structures": {
+        "QAInputRequest": {
+            "name": "QAInputRequest",
+            "attributes": {
+                "PartNo": {
+                    "datatype": "Text",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                },
+                "SerialNo": {
+                    "datatype": "Text",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                },
+                "OperationNo": {
+                    "datatype": "Text",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                },
+                "DataPoint": {
+                    "datatype": "Number",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                },
+                "DataValue": {
+                    "datatype": "Number",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                },
+                "Accuracy": {
+                    "datatype": "Number",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                }
+            },
+            "references": {
+            },
+            "arrays": {
+            }
+        },
+        "QAInputResponse": {
+            "name": "QAInputResponse",
+            "attributes": {
+                "Result": {
+                    "datatype": "Text",
+                    "required": false,
+                    "editable": true,
+                    "updatable": true,
+                    "insertable": true,
+                    "unbound": false,
+                    "multiselect": false
+                }
+            },
+            "references": {
+            },
+            "arrays": {
+            }
+        }
+    },
+    "actions": {
+        "UpdatePointData": {
+            "name": "UpdatePointData",
+            "ludependencies": [
+            ],
+            "returnType": {
+                "dataType": "Structure",
+                "subType": "QAInputResponse",
+                "collection": false
+            },
+            "parameters": [
+                {
+                    "Name": "QAInputRequest",
+                    "DataType": "Structure",
+                    "SubType": "QAInputRequest",
+                    "Collection": false,
+                    "Nullable": false
+                }
+            ]
+        }[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Action_Metadata:{
+    "Projection": "CQualityEndpoint"
+}]#]
+    },
+    "functions": {
+    },
+    "objectconnections": [#[metacallback:Dynamic_Reference_Metadata_API.Get_Json_Entities_:]#]
+}

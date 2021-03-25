@@ -1,0 +1,7 @@
+layer Cust;
+FUNCTION Update_Point_Data___ (
+   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
+IS
+BEGIN
+  NULL;
+END Update_Point_Data___;

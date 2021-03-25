@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ySGNPheB6jdrURMvMePTC8xWm8noQG+vZksnlclJd8wOHOCi00zrX/vllxrbtz9+Vsvv/6+Ajhc2cwtBTHFIlg==",
+  "success": true,
+  "projectFilePath": "H:\\QC_QMan\\EP.QCManWebService\\EP.QualService\\EP.QualService\\EP.QualService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\julfeng\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Projections version="1.0" module="CMOD" type="SVC" layer="Cust">
+   <Projection name="CQualityEndpoint">
+      <Text><![CDATA[Quality Assurance Rest API]]></Text>
+   </Projection>
+</Projections> 

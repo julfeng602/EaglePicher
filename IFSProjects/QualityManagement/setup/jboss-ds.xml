@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<datasources>
+    <local-tx-datasource>
+        <jndi-name>jdbc/fndbas</jndi-name>
+        <connection-url>jdbc:oracle:thin:@//10.240.16.5:1521/EAGLDEV</connection-url>
+        <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+        <user-name>IFSSYS</user-name>
+        <password></password>
+        <min-pool-size>1</min-pool-size>
+        <max-pool-size>3</max-pool-size>
+        <idle-timeout-minutes>1</idle-timeout-minutes>
+        <use-java-context>false</use-java-context>
+    </local-tx-datasource>
+</datasources>

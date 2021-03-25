@@ -1,0 +1,49 @@
+projection CQualityEndpoint;
+component CMOD;
+layer Cust;
+description "Quality Assurance Rest API";
+category Integration;
+apiclass Standard;
+--------------------------------- FRAGMENTS ---------------------------------
+
+----------------------------- MAIN ENTRY POINTS -----------------------------
+
+
+------------------------------ ENTITY DETAILS -------------------------------
+
+
+------------------------------- ENUMERATIONS --------------------------------
+
+
+---------------------------------- QUERIES ----------------------------------
+
+
+---------------------------------- ACTIONS ----------------------------------
+action UpdatePointData Structure(QAInputResponse) {
+   initialcheck none;
+   parameter QAInputRequest Structure(QAInputRequest) {
+      required = [true];
+   }
+}
+--------------------------------- FUNCTIONS ---------------------------------
+
+
+-------------------------------- STRUCTURES ---------------------------------
+structure QAInputRequest {
+   attribute PartNo Text;
+   attribute SerialNo Text;
+   attribute OperationNo Text;
+   attribute DataPoint Number;
+   attribute DataValue Number;
+   attribute Accuracy Number;
+}
+structure QAInputResponse {
+   attribute Result Text;
+}
+--------------------------------- VIRTUALS ----------------------------------
+
+
+--------------------------------- SUMMARIES ---------------------------------
+
+
+-------------------------------- SINGLETONS ---------------------------------
