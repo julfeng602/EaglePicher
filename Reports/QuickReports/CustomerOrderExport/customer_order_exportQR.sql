@@ -50,7 +50,6 @@ BEGIN
 END;
 /
 
-
 column sql_s new_value mysql noprint
 
 select
