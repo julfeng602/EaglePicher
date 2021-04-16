@@ -89,7 +89,7 @@ TYPE Stream_Text_Data_Rec IS RECORD (
    mime_type                           VARCHAR2(100),
    stream_data                         CLOB);
 
-TYPE Q_A_Input_Request_Ret IS RECORD (
+TYPE Qa_Update_Point_Request_Ret IS RECORD (
    part_no                        VARCHAR2(4000),
    serial_no                      VARCHAR2(4000),
    operation_no                   VARCHAR2(4000),
@@ -97,9 +97,9 @@ TYPE Q_A_Input_Request_Ret IS RECORD (
    data_value                     NUMBER,
    accuracy                       NUMBER);
 
-TYPE Q_A_Input_Request_Art IS TABLE OF Q_A_Input_Request_Ret;
+TYPE Qa_Update_Point_Request_Art IS TABLE OF Qa_Update_Point_Request_Ret;
 
-TYPE Q_A_Input_Request_Rec IS RECORD (
+TYPE Qa_Update_Point_Request_Rec IS RECORD (
    part_no                        VARCHAR2(4000),
    serial_no                      VARCHAR2(4000),
    operation_no                   VARCHAR2(4000),
@@ -107,17 +107,17 @@ TYPE Q_A_Input_Request_Rec IS RECORD (
    data_value                     NUMBER,
    accuracy                       NUMBER);
 
-TYPE Q_A_Input_Request_Arr IS TABLE OF Q_A_Input_Request_Rec;
+TYPE Qa_Update_Point_Request_Arr IS TABLE OF Qa_Update_Point_Request_Rec;
 
-TYPE Q_A_Input_Response_Ret IS RECORD (
+TYPE Qa_Update_Point_Response_Ret IS RECORD (
    result                         VARCHAR2(4000));
 
-TYPE Q_A_Input_Response_Art IS TABLE OF Q_A_Input_Response_Ret;
+TYPE Qa_Update_Point_Response_Art IS TABLE OF Qa_Update_Point_Response_Ret;
 
-TYPE Q_A_Input_Response_Rec IS RECORD (
+TYPE Qa_Update_Point_Response_Rec IS RECORD (
    result                         VARCHAR2(4000));
 
-TYPE Q_A_Input_Response_Arr IS TABLE OF Q_A_Input_Response_Rec;
+TYPE Qa_Update_Point_Response_Arr IS TABLE OF Qa_Update_Point_Response_Rec;
 
 -------------------- PRIVATE DECLARATIONS -----------------------------------
 
@@ -309,9 +309,9 @@ END To_Boolean_Arr____;
 
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+   rec_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Request_Ret
 IS
-   ret_ Q_A_Input_Request_Ret;
+   ret_ Qa_Update_Point_Request_Ret;
 BEGIN
    ret_.part_no                        := To_Ret____(rec_.part_no);
    ret_.serial_no                      := To_Ret____(rec_.serial_no);
@@ -324,9 +324,9 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+   arr_ IN Qa_Update_Point_Request_Arr ) RETURN Qa_Update_Point_Request_Art
 IS
-   ret_ Q_A_Input_Request_Art := Q_A_Input_Request_Art();
+   ret_ Qa_Update_Point_Request_Art := Qa_Update_Point_Request_Art();
 BEGIN
    IF (arr_.count > 0) THEN
       FOR i IN arr_.first .. arr_.last LOOP
@@ -339,9 +339,9 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+   rec_ IN Qa_Update_Point_Response_Rec ) RETURN Qa_Update_Point_Response_Ret
 IS
-   ret_ Q_A_Input_Response_Ret;
+   ret_ Qa_Update_Point_Response_Ret;
 BEGIN
    ret_.result                         := To_Ret____(rec_.result);
    RETURN ret_;
@@ -349,9 +349,9 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+   arr_ IN Qa_Update_Point_Response_Arr ) RETURN Qa_Update_Point_Response_Art
 IS
-   ret_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+   ret_ Qa_Update_Point_Response_Art := Qa_Update_Point_Response_Art();
 BEGIN
    IF (arr_.count > 0) THEN
       FOR i IN arr_.first .. arr_.last LOOP
@@ -369,13 +369,13 @@ END To_Ret____;
 
 @Final
 @UncheckedAccess
-FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+FUNCTION Do_Update_Point_Data(update_request_ IN Qa_Update_Point_Request_Rec, unbound## IN VARCHAR2) RETURN Qa_Update_Point_Response_Art
 IS
-   rec_ Q_A_Input_Response_Rec;
-   art_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+   rec_ Qa_Update_Point_Response_Rec;
+   art_ Qa_Update_Point_Response_Art := Qa_Update_Point_Response_Art();
 BEGIN
    Log_SYS.Init_Method('C_Quality_Endpoint_SVC', 'Do_Update_Point_Data');
-   rec_ := Update_Point_Data___(q_a_input_request_);
+   rec_ := Update_Point_Data___(update_request_);
    art_.extend();
    art_(1) := To_Ret____(rec_);
    RETURN art_;
@@ -383,7 +383,7 @@ END Do_Update_Point_Data;
 
 @ProjectionGenerated
 FUNCTION Update_Point_Data___ (
-   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec;
+   update_request_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Response_Rec;
 
 
 

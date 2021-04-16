@@ -71,17 +71,35 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
 -----------------------------------------------------------------------------
     function Get_Analysis_No(part_no_ in varchar2,
                            serial_no_ in varchar2,
-                           operation_no_ int) RETURN int
+                           operation_no_ in int,
+                           data_point_ in int) RETURN int
     as
         analysis_no_ int;
     begin
         BEGIN
+            SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV
+                where
+                    analysis_state = 'Planned' and
+                    part_no = part_no_ AND
+                    test_operation_no = operation_no_ and
+                    data_point = data_point_;
+                    /*
+           if (serial_no_ is null) then
             SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV an
                 where
                     an.analysis_state = 'Planned' and
                     an.part_no = part_no_ AND
-                    an.serial_no = coalesce(serial_no_, '*') and
+                    an.serial_no is null and
                     an.test_operation_no = operation_no_;
+           else
+            SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV an
+                where
+                    an.analysis_state = 'Planned' and
+                    an.part_no = part_no_ AND
+                    an.serial_no = serial_no_ and
+                    an.test_operation_no = operation_no_;
+            end if;    
+            */
                     
    
         EXCEPTION 
@@ -100,24 +118,32 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
     is
         analysis_no_ int; 
         info_ varchar2(1000) := '';
-        
+        serial_no_new_ varchar2(200) := null;
         report_attr_ varchar2(10000);
         objid_         QMAN_SAMPLE_VALUE.objid%TYPE;
         objversion_    QMAN_SAMPLE_VALUE.objversion%TYPE;    
     begin
-        analysis_no_ := Get_Analysis_No(part_no_, serial_no_, operation_no_);
+        if(Length(serial_no_) > 0)  then
+            serial_no_new_ := serial_no_;
+        else
+            serial_no_new_ := null;
+        end if;
+        analysis_no_ := Get_Analysis_No(part_no_, serial_no_new_, operation_no_, data_point_);
         if(analysis_no_ = -1) then
           info_ := 'Analysis not found';
           return info_;
         end if;
-        Select ObjID into objid_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_;
-        select objversion into objversion_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_;
+        Select ObjID into objid_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_ and result_no = (select max(result_no) from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_) ;
+        select objversion into objversion_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_  and result_no = (select max(result_no) from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_) ;
         if ((objid_ IS NULL)  OR (objversion_ is null)) then
             info_ := 'Data Point Not found for point: ' || data_point_;
             return info_;
         end if;
         client_sys.Add_To_Attr('RESULT', result_, report_attr_);
         client_sys.Add_To_Attr('ACCURACY', accuracy_ ,report_attr_);
+        if(Length(serial_no_) > 0)  then
+            client_sys.Add_To_Attr('SERIAL_NO', serial_no_ ,report_attr_);
+        END IF;
         dbms_output.put_line('report_attr: ' || report_attr_);
         BEGIN
             SAVEPOINT do_insert;

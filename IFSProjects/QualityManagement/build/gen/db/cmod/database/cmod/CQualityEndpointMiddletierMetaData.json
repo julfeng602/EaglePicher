@@ -21,27 +21,27 @@
                 {
                     "Name": "UpdatePointData",
                     "DataType": "Structure",
-                    "SubType": "QAInputResponse",
+                    "SubType": "QaUpdatePointResponse",
                     "Collection": false,
                     "Parameters": [
                         {
-                            "Name": "QAInputRequest",
+                            "Name": "UpdateRequest",
                             "DataType": "Structure",
-                            "SubType": "QAInputRequest",
+                            "SubType": "QaUpdatePointRequest",
                             "Collection": false,
                             "Nullable": false
                         }
                     ],
                     "Execute": {
                         "PL-SQL": {
-                            "MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:QAInputRequest, unbound## => '')",
-                            "ReturnType": "C_Quality_Endpoint_SVC.Q_A_Input_Response_Art",
+                            "MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:UpdateRequest, unbound## => '')",
+                            "ReturnType": "C_Quality_Endpoint_SVC.Qa_Update_Point_Response_Art",
                             "Bind": [
                                 {
                                     "Kind": "Parameter",
-                                    "Name": "QAInputRequest",
+                                    "Name": "UpdateRequest",
                                     "ImplementationType": "STRUCTURE",
-                                    "SubType": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC"
+                                    "SubType": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_REQUEST_REC"
                                 }
                             ]
                         }
@@ -59,8 +59,8 @@
         ],
         "Structures": [
             {
-                "Name": "QAInputRequest",
-                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC",
+                "Name": "QaUpdatePointRequest",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_REQUEST_REC",
                 "Attributes": [
                     {
                         "Name": "PartNo",
@@ -137,8 +137,8 @@
                 ]
             },
             {
-                "Name": "QAInputResponse",
-                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_RESPONSE_REC",
+                "Name": "QaUpdatePointResponse",
+                "PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_RESPONSE_REC",
                 "Attributes": [
                     {
                         "Name": "Result",

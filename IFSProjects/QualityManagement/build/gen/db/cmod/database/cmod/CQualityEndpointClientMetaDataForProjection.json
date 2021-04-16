@@ -1,7 +1,7 @@
 {
     "name": "CQualityEndpoint",
     "service": "CQualityEndpoint.svc",
-    "version": "-1112861591",
+    "version": "79059592",
     "contains": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entityset_Metadata:{
     "Projection": "CQualityEndpoint",
     "Lu": [
@@ -21,8 +21,8 @@
 }]#]
     },
     "structures": {
-        "QAInputRequest": {
-            "name": "QAInputRequest",
+        "QaUpdatePointRequest": {
+            "name": "QaUpdatePointRequest",
             "attributes": {
                 "PartNo": {
                     "datatype": "Text",
@@ -84,8 +84,8 @@
             "arrays": {
             }
         },
-        "QAInputResponse": {
-            "name": "QAInputResponse",
+        "QaUpdatePointResponse": {
+            "name": "QaUpdatePointResponse",
             "attributes": {
                 "Result": {
                     "datatype": "Text",
@@ -110,14 +110,14 @@
             ],
             "returnType": {
                 "dataType": "Structure",
-                "subType": "QAInputResponse",
+                "subType": "QaUpdatePointResponse",
                 "collection": false
             },
             "parameters": [
                 {
-                    "Name": "QAInputRequest",
+                    "Name": "UpdateRequest",
                     "DataType": "Structure",
-                    "SubType": "QAInputRequest",
+                    "SubType": "QaUpdatePointRequest",
                     "Collection": false,
                     "Nullable": false
                 }

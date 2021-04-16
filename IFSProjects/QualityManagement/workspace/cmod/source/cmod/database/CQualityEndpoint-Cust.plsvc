@@ -12,10 +12,18 @@
 layer Cust;
 
 FUNCTION Update_Point_Data___ (
-   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
-IS  
-   InputResponseRec_ Q_A_Input_Response_Rec;
+   update_request_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Response_Rec
+IS
+   resp_ varchar2(200);
+   response Qa_Update_Point_Response_Rec;
 BEGIN
-   InputResponseRec_.Result := 'Hello From Jonathan';
-   RETURN InputResponseRec_;
+   resp_ := EP_QC_QMAN_ANALYSIS.Update_Point_Value( part_no_ => update_request_.part_no,
+                                                    serial_no_ => update_request_.serial_no,
+                                                    operation_no_ => update_request_.operation_no,
+                                                    data_point_ => update_request_.data_point,
+                                                    result_ => update_request_.data_value,
+                                                    accuracy_ => update_request_.accuracy
+   );
+   response.Result := 'Response: ' || resp_;
+   RETURN response;
 END Update_Point_Data___;

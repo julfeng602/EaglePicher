@@ -21,8 +21,8 @@ DECLARE
 BEGIN
    header_ := Model_Design_SYS.Prepare_Design_Data_Load('projection', projection_, Model_Design_SYS.SERVER_METADATA,
       'Quality Assurance Rest API');
-   json_ := '{"projection": {"Name": "CQualityEndpoint","Metadata": {"Version": "[#[generate:version]#]","Description": "Quality Assurance Rest API","Category": ["Integration"]},"Container": {"EntitySets": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Singletons": [],"Actions": [{"Name": "UpdatePointData","DataType": "Structure","SubType": "QAInputResponse","Collection": false,"Parameters": [{"Name": "QAInputRequest","DataType": "Structure","SubType": "QAInputRequest","Collection": false,"Nullable": false}],"Execute": {"PL-SQL": {"MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:QAInputRequest, unbound## => '''')","ReturnType": "C_Quality_Endpoint_SVC.Q_A_Input_Response_Art","Bind": [{"Kind": "Parameter","Name": "QAInputRequest","ImplementationType": "STRUCTURE","SubType": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC"}]}}}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Action_Metadata:{"Projection":"CQualityEndpoint"}]#]],"Functions": []},"Enumerations": [[#[jsoncallback:Custom_Object_Proxy_SYS.Server_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Structures": [{"Name": "QAInputRequest","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_REQUEST_REC","Attributes": [{"Name": "PartNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "PART_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "SerialNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "SERIAL_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "OperationNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "OPERATION_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "DataPoint","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_POINT","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "DataValue","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_VALUE","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "Accuracy","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "ACCURACY","Execute": {"SQL": {"ImplementationType": "NUMBER"}}}]},{"Name": "QAInputResponse","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.Q_A_INPUT_RESPONSE_REC","Attributes": [{"Name": "Result","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "RESULT","Execute": {"SQL": {"Impleme';
-   json_ := json_ || 'ntationType": "VARCHAR2"}}}]},{"Name": "StreamInfoRec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.STREAM_INFO_REC","Attributes": [{"Name": "FileName","DataType": "Text"},{"Name": "MimeType","DataType": "Text"}]},{"Name": "EntityDec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.ENTITY_DEC","Attributes": [{"Name": "ETag","DataType": "Text"},{"Name": "Info","DataType": "Text"},{"Name": "Attr","DataType": "Text"}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Structure_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Entities": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]]}}';
+   json_ := '{"projection": {"Name": "CQualityEndpoint","Metadata": {"Version": "[#[generate:version]#]","Description": "Quality Assurance Rest API","Category": ["Integration"]},"Container": {"EntitySets": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Singletons": [],"Actions": [{"Name": "UpdatePointData","DataType": "Structure","SubType": "QaUpdatePointResponse","Collection": false,"Parameters": [{"Name": "UpdateRequest","DataType": "Structure","SubType": "QaUpdatePointRequest","Collection": false,"Nullable": false}],"Execute": {"PL-SQL": {"MethodCall": "C_Quality_Endpoint_SVC.Do_Update_Point_Data(:UpdateRequest, unbound## => '''')","ReturnType": "C_Quality_Endpoint_SVC.Qa_Update_Point_Response_Art","Bind": [{"Kind": "Parameter","Name": "UpdateRequest","ImplementationType": "STRUCTURE","SubType": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_REQUEST_REC"}]}}}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Action_Metadata:{"Projection":"CQualityEndpoint"}]#]],"Functions": []},"Enumerations": [[#[jsoncallback:Custom_Object_Proxy_SYS.Server_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Structures": [{"Name": "QaUpdatePointRequest","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_REQUEST_REC","Attributes": [{"Name": "PartNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "PART_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "SerialNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "SERIAL_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "OperationNo","DataType": "Text","Collection": false,"Nullable": true,"AttrName": "OPERATION_NO","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}},{"Name": "DataPoint","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_POINT","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "DataValue","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "DATA_VALUE","Execute": {"SQL": {"ImplementationType": "NUMBER"}}},{"Name": "Accuracy","DataType": "Number","Collection": false,"Nullable": true,"AttrName": "ACCURACY","Execute": {"SQL": {"ImplementationType": "NUMBER"}}}]},{"Name": "QaUpdatePointResponse","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.QA_UPDATE_POINT_RESPONSE_REC","Attributes": [{"Name": "Result","DataType": "Text","Collection": false,"Nullable": true,"Att';
+   json_ := json_ || 'rName": "RESULT","Execute": {"SQL": {"ImplementationType": "VARCHAR2"}}}]},{"Name": "StreamInfoRec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.STREAM_INFO_REC","Attributes": [{"Name": "FileName","DataType": "Text"},{"Name": "MimeType","DataType": "Text"}]},{"Name": "EntityDec","PLSQLRecordName": "C_QUALITY_ENDPOINT_SVC.ENTITY_DEC","Attributes": [{"Name": "ETag","DataType": "Text"},{"Name": "Info","DataType": "Text"},{"Name": "Attr","DataType": "Text"}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Structure_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]],"Entities": [[#[jsoncallback:Custom_Object_Proxy_Sys.Server_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]]}}';
    Model_Design_SYS.Add_Model_Design_Template(header_, json_);
    COMMIT;
 END;
@@ -36,7 +36,7 @@ DECLARE
    json_       VARCHAR2(32767);
 BEGIN
    header_ := Model_Design_SYS.Prepare_Design_Data_Load('projection', projection_, Model_Design_SYS.CLIENT_METADATA, '');
-   json_ := '{"name": "CQualityEndpoint","service": "CQualityEndpoint.svc","version": "-1112861591","contains": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"enumerations": {[#[jsoncallback:Custom_Object_Proxy_SYS.Client_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"entities": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"structures": {"QAInputRequest": {"name": "QAInputRequest","attributes": {"PartNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"SerialNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"OperationNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataPoint": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataValue": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"Accuracy": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}},"QAInputResponse": {"name": "QAInputResponse","attributes": {"Result": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}}},"actions": {"UpdatePointData": {"name": "UpdatePointData","ludependencies": [],"returnType": {"dataType": "Structure","subType": "QAInputResponse","collection": false},"parameters": [{"Name": "QAInputRequest","DataType": "Structure","SubType": "QAInputRequest","Collection": false,"Nullable": false}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Action_Metadata:{"Projection": "CQualityEndpoint"}]#]},"functions": {},"objectconnections": [#[metacallback:Dynamic_Reference_Metadata_API.Get_Json_Entities_:]#]}';
+   json_ := '{"name": "CQualityEndpoint","service": "CQualityEndpoint.svc","version": "79059592","contains": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entityset_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"enumerations": {[#[jsoncallback:Custom_Object_Proxy_SYS.Client_Enumeration_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"entities": {[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Entity_Type_Metadata:{"Projection": "CQualityEndpoint","Lu": []}]#]},"structures": {"QaUpdatePointRequest": {"name": "QaUpdatePointRequest","attributes": {"PartNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"SerialNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"OperationNo": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataPoint": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"DataValue": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false},"Accuracy": {"datatype": "Number","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}},"QaUpdatePointResponse": {"name": "QaUpdatePointResponse","attributes": {"Result": {"datatype": "Text","required": false,"editable": true,"updatable": true,"insertable": true,"unbound": false,"multiselect": false}},"references": {},"arrays": {}}},"actions": {"UpdatePointData": {"name": "UpdatePointData","ludependencies": [],"returnType": {"dataType": "Structure","subType": "QaUpdatePointResponse","collection": false},"parameters": [{"Name": "UpdateRequest","DataType": "Structure","SubType": "QaUpdatePointRequest","Collection": false,"Nullable": false}]}[#[jsoncallback:Custom_Object_Proxy_Sys.Client_Action_Metadata:{"Projection": "CQualityEndpoint"}]#]},"functions": {},"objectconnections": [#[metacallback:Dynamic_Reference_Metadata_API.Get_Json_Entities_:]#]}';
    Model_Design_SYS.Add_Model_Design_Template(header_, json_);
    COMMIT;
 END;
@@ -163,7 +163,7 @@ TYPE Stream_Text_Data_Rec IS RECORD (
    mime_type                           VARCHAR2(100),
    stream_data                         CLOB);
 
-TYPE Q_A_Input_Request_Ret IS RECORD (
+TYPE Qa_Update_Point_Request_Ret IS RECORD (
    part_no                        VARCHAR2(4000),
    serial_no                      VARCHAR2(4000),
    operation_no                   VARCHAR2(4000),
@@ -171,9 +171,9 @@ TYPE Q_A_Input_Request_Ret IS RECORD (
    data_value                     NUMBER,
    accuracy                       NUMBER);
 
-TYPE Q_A_Input_Request_Art IS TABLE OF Q_A_Input_Request_Ret;
+TYPE Qa_Update_Point_Request_Art IS TABLE OF Qa_Update_Point_Request_Ret;
 
-TYPE Q_A_Input_Request_Rec IS RECORD (
+TYPE Qa_Update_Point_Request_Rec IS RECORD (
    part_no                        VARCHAR2(4000),
    serial_no                      VARCHAR2(4000),
    operation_no                   VARCHAR2(4000),
@@ -181,17 +181,17 @@ TYPE Q_A_Input_Request_Rec IS RECORD (
    data_value                     NUMBER,
    accuracy                       NUMBER);
 
-TYPE Q_A_Input_Request_Arr IS TABLE OF Q_A_Input_Request_Rec;
+TYPE Qa_Update_Point_Request_Arr IS TABLE OF Qa_Update_Point_Request_Rec;
 
-TYPE Q_A_Input_Response_Ret IS RECORD (
+TYPE Qa_Update_Point_Response_Ret IS RECORD (
    result                         VARCHAR2(4000));
 
-TYPE Q_A_Input_Response_Art IS TABLE OF Q_A_Input_Response_Ret;
+TYPE Qa_Update_Point_Response_Art IS TABLE OF Qa_Update_Point_Response_Ret;
 
-TYPE Q_A_Input_Response_Rec IS RECORD (
+TYPE Qa_Update_Point_Response_Rec IS RECORD (
    result                         VARCHAR2(4000));
 
-TYPE Q_A_Input_Response_Arr IS TABLE OF Q_A_Input_Response_Rec;
+TYPE Qa_Update_Point_Response_Arr IS TABLE OF Qa_Update_Point_Response_Rec;
 
 
 -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ FUNCTION Get_Metadata_Service_Group_ (
 ------------------------------- GLOBAL METHODS ------------------------------
 -----------------------------------------------------------------------------
 --@PoReadOnly(Do_Update_Point_Data)
-FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art;
+FUNCTION Do_Update_Point_Data(update_request_ IN Qa_Update_Point_Request_Rec, unbound## IN VARCHAR2) RETURN Qa_Update_Point_Response_Art;
 
 END C_Quality_Endpoint_SVC;
 -- [END IFS COMPLETE BLOCK]
@@ -352,16 +352,16 @@ FUNCTION To_Ret____ (
    arr_ IN Stream_Data_Arr ) RETURN Stream_Data_Art;
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret;
+   rec_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Request_Ret;
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art;
+   arr_ IN Qa_Update_Point_Request_Arr ) RETURN Qa_Update_Point_Request_Art;
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret;
+   rec_ IN Qa_Update_Point_Response_Rec ) RETURN Qa_Update_Point_Response_Ret;
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art;
+   arr_ IN Qa_Update_Point_Response_Arr ) RETURN Qa_Update_Point_Response_Art;
 
 FUNCTION To_Boolean____ (
    rec_ IN VARCHAR2 ) RETURN BOOLEAN;
@@ -370,30 +370,30 @@ FUNCTION To_Boolean_Arr____ (
    arr_ IN Text_Arr ) RETURN Boolean_Arr;
 
 FUNCTION Update_Point_Data___ (
-   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec;
+   update_request_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Response_Rec;
 
 -----------------------------------------------------------------------------
 -------------------- GLOBAL METHODS -----------------------------------------
 -----------------------------------------------------------------------------
 
 --@IgnoreMissingSysinit
-FUNCTION Do_Update_Point_Data(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+FUNCTION Do_Update_Point_Data(update_request_ IN Qa_Update_Point_Request_Rec, unbound## IN VARCHAR2) RETURN Qa_Update_Point_Response_Art
 IS
    
-   FUNCTION Base(q_a_input_request_ IN Q_A_Input_Request_Rec, unbound## IN VARCHAR2) RETURN Q_A_Input_Response_Art
+   FUNCTION Base(update_request_ IN Qa_Update_Point_Request_Rec, unbound## IN VARCHAR2) RETURN Qa_Update_Point_Response_Art
    IS
-      rec_ Q_A_Input_Response_Rec;
-      art_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+      rec_ Qa_Update_Point_Response_Rec;
+      art_ Qa_Update_Point_Response_Art := Qa_Update_Point_Response_Art();
    BEGIN
       Log_SYS.Init_Method('C_Quality_Endpoint_SVC', 'Do_Update_Point_Data');
-      rec_ := Update_Point_Data___(q_a_input_request_);
+      rec_ := Update_Point_Data___(update_request_);
       art_.extend();
       art_(1) := To_Ret____(rec_);
       RETURN art_;
    END Base;
 
 BEGIN
-   RETURN Base(q_a_input_request_, unbound##);
+   RETURN Base(update_request_, unbound##);
 END Do_Update_Point_Data;
 
 -----------------------------------------------------------------------------
@@ -653,13 +653,13 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+   rec_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Request_Ret
 IS
    
    FUNCTION Base (
-      rec_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Request_Ret
+      rec_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Request_Ret
    IS
-      ret_ Q_A_Input_Request_Ret;
+      ret_ Qa_Update_Point_Request_Ret;
    BEGIN
       ret_.part_no                        := To_Ret____(rec_.part_no);
       ret_.serial_no                      := To_Ret____(rec_.serial_no);
@@ -676,13 +676,13 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+   arr_ IN Qa_Update_Point_Request_Arr ) RETURN Qa_Update_Point_Request_Art
 IS
    
    FUNCTION Base (
-      arr_ IN Q_A_Input_Request_Arr ) RETURN Q_A_Input_Request_Art
+      arr_ IN Qa_Update_Point_Request_Arr ) RETURN Qa_Update_Point_Request_Art
    IS
-      ret_ Q_A_Input_Request_Art := Q_A_Input_Request_Art();
+      ret_ Qa_Update_Point_Request_Art := Qa_Update_Point_Request_Art();
    BEGIN
       IF (arr_.count > 0) THEN
          FOR i IN arr_.first .. arr_.last LOOP
@@ -699,13 +699,13 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+   rec_ IN Qa_Update_Point_Response_Rec ) RETURN Qa_Update_Point_Response_Ret
 IS
    
    FUNCTION Base (
-      rec_ IN Q_A_Input_Response_Rec ) RETURN Q_A_Input_Response_Ret
+      rec_ IN Qa_Update_Point_Response_Rec ) RETURN Qa_Update_Point_Response_Ret
    IS
-      ret_ Q_A_Input_Response_Ret;
+      ret_ Qa_Update_Point_Response_Ret;
    BEGIN
       ret_.result                         := To_Ret____(rec_.result);
       RETURN ret_;
@@ -717,13 +717,13 @@ END To_Ret____;
 
 
 FUNCTION To_Ret____ (
-   arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+   arr_ IN Qa_Update_Point_Response_Arr ) RETURN Qa_Update_Point_Response_Art
 IS
    
    FUNCTION Base (
-      arr_ IN Q_A_Input_Response_Arr ) RETURN Q_A_Input_Response_Art
+      arr_ IN Qa_Update_Point_Response_Arr ) RETURN Qa_Update_Point_Response_Art
    IS
-      ret_ Q_A_Input_Response_Art := Q_A_Input_Response_Art();
+      ret_ Qa_Update_Point_Response_Art := Qa_Update_Point_Response_Art();
    BEGIN
       IF (arr_.count > 0) THEN
          FOR i IN arr_.first .. arr_.last LOOP
@@ -798,20 +798,28 @@ END To_Boolean_Arr____;
 -----------------------------------------------------------------------------
 
 FUNCTION Update_Point_Data___ (
-   q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
+   update_request_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Response_Rec
 IS
    
    FUNCTION Cust_Projection_CQualityEndpoint (
-      q_a_input_request_ IN Q_A_Input_Request_Rec ) RETURN Q_A_Input_Response_Rec
-   IS  
-      InputResponseRec_ Q_A_Input_Response_Rec;
+      update_request_ IN Qa_Update_Point_Request_Rec ) RETURN Qa_Update_Point_Response_Rec
+   IS
+      resp_ varchar2(200);
+      response Qa_Update_Point_Response_Rec;
    BEGIN
-      InputResponseRec_.Result := 'Hello From Jonathan';
-      RETURN InputResponseRec_;
+      resp_ := EP_QC_QMAN_ANALYSIS.Update_Point_Value( part_no_ => update_request_.part_no,
+                                                       serial_no_ => update_request_.serial_no,
+                                                       operation_no_ => update_request_.operation_no,
+                                                       data_point_ => update_request_.data_point,
+                                                       result_ => update_request_.data_value,
+                                                       accuracy_ => update_request_.accuracy
+      );
+      response.Result := 'Response: ' || resp_;
+      RETURN response;
    END Cust_Projection_CQualityEndpoint;
 
 BEGIN
-   RETURN Cust_Projection_CQualityEndpoint(q_a_input_request_);
+   RETURN Cust_Projection_CQualityEndpoint(update_request_);
 END Update_Point_Data___;
 
 END C_Quality_Endpoint_SVC;
