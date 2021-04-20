@@ -79,7 +79,7 @@ select
 as sql_s
 from dual;
 
-@H:\Utilities\Quick_Report_Create 'EXPORT CONTROL' 'Export License Status' "&mysql" 'IFSAPP' 'Export License p: PartNo'
+@Quick_Report_Create  'EXPORT CONTROL' 'Export License Status' "&mysql" 'IFSAPP' 'Export License p: PartNo'
 /
 show errors
 SPOOL OFF
