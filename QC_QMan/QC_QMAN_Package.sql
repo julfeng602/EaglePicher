@@ -77,12 +77,12 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
         analysis_no_ int;
     begin
         BEGIN
-            SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV
+            SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV an
                 where
-                    analysis_state = 'Planned' and
-                    part_no = part_no_ AND
-                    test_operation_no = operation_no_ and
-                    data_point = data_point_;
+                    an.analysis_state = 'Planned' and
+                    an.part_no = part_no_ AND
+                    an.test_operation_no = operation_no_; --and
+                   -- an.data_point = data_point_;
                     /*
            if (serial_no_ is null) then
             SELECT max(analysis_no) INTO analysis_no_ FROM QMAN_ANALYSIS_VA1342390886_CFV an
@@ -100,8 +100,6 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                     an.test_operation_no = operation_no_;
             end if;    
             */
-                    
-   
         EXCEPTION 
           WHEN NO_DATA_FOUND THEN	
             analysis_no_ := -1;                  
@@ -114,7 +112,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
                                 operation_no_ in int,
                                 data_point_ in int,
                                 result_ in int,
-                                accuracy_ in int ) return varchar2
+                                accuracy_ in int) return varchar2
     is
         analysis_no_ int; 
         info_ varchar2(1000) := '';
@@ -133,7 +131,7 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
           info_ := 'Analysis not found';
           return info_;
         end if;
-        Select ObjID into objid_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_ and result_no = (select max(result_no) from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_) ;
+        Select ObjID into objid_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_ AND and result_no = (select max(result_no) from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_) ;
         select objversion into objversion_ from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_  and result_no = (select max(result_no) from qman_sample_value where analysis_no = analysis_no_ and data_point = data_point_) ;
         if ((objid_ IS NULL)  OR (objversion_ is null)) then
             info_ := 'Data Point Not found for point: ' || data_point_;

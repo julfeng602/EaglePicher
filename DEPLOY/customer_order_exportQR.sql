@@ -2,12 +2,12 @@
  * COPYRIGHT 2021 EAGLE PICHER                                                 *
  *******************************************************************************
  * Created By:      Jonathan Ulfeng                                            *
- * Date Created:    4/20/2021                                                  *
- * Description:     Checks Export Control Status for other than US             *
+ * Date Created:    2/11/2021                                                   *
+ * Description:     Checks Export Status for Customer Order                    *
  *                                                                             *
  *                                                                             *
  * Modification:                                                               *
- *     4/24/2021   J Ulfeng - Initial creation                                  *
+ *     2/3/2021   J Ulfeng - Initial creation                                  *
  *                                                                             *
  ******************************************************************************/
 
@@ -15,7 +15,7 @@
 
 column db new_value db noprint
 select lower(name) as "db" from v$database;
-SPOOL ../../logs/ExportCotrolStatus_US_&db..log
+SPOOL ../../logs/ExportControlCustomerOrderExport_&db..log
 SELECT '&db' DBINSTANCE,
         USER oracle_user,
         sys_context('userenv','os_user') AS OS_USER,
@@ -33,7 +33,7 @@ info_ VARCHAR2(32000);
 attr_ VARCHAR2(32000);
 objversion_ quick_report.objversion%type;
 action_ varchar2(5) := 'DO';
-report_name_ varchar2(100) :='Export Control Outside US';
+report_name_ varchar2(100) :='Export Control - Customer Orders';
 
 BEGIN
 
@@ -74,20 +74,18 @@ select
 || 'IFSAPP.EP_Export_Shipment_Check.GetLicenseConn(l.order_no, l.line_no, l.rel_no, l.line_item_no, l.part_no, l.buy_qty_due, o.customer_no) ""' || ' License Status/Connected ' || '""  '
 || 'from  '
 || 'ifsapp.customer_order_cfv o '
-|| 'left outer join customer_order_line l '
+|| 'left outer join ifsapp.customer_order_line l '
 || 'ON l.order_no = o.order_no and l.catalog_type_db = ''''INV'''' '
 || 'left outer join ifsapp.CUST_ORD_ADDRESS_2_UIV ai '
 || 'on ai.order_no = o.order_no '
 || 'where '
-|| '  ai.country_code != ''''US'''' '
-|| '  AND o.order_no  LIKE ( '''''||chr(38)||'OrderNo'||chr(37)||''''' ) '
-|| '  and o.wanted_delivery_date BETWEEN  to_date('''''||chr(38)||'WantedStartDate'''', ''''mm/dd/yyyy'''') AND to_date('''''||chr(38)||'WantedEndDate'''', ''''mm/dd/yyyy'''') '
+|| '  o.order_no  LIKE ( '''''||chr(38)||'OrderNo'||chr(37)||''''' ) '
 || 'order by  '
 || 'o.order_no, l.line_no, l.rel_no, l.line_item_no '
 as sql_s
 from dual;
 
-@H:\Utilities\Quick_Report_Create  'Export Control' 'Export Control Outside US' "&mysql" 'IFSAPP' 'params: OrderNo, Wanted dates'
+@@H:\Utilities\Quick_Report_Create  'EXPORT CONTROL' 'Export Control - Customer Orders' "&mysql" 'IFSAPP' 'Export Check Customer Order p: OrderNo'
 /
 show errors
 SPOOL OFF

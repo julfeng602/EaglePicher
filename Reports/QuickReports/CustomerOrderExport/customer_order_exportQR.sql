@@ -85,7 +85,7 @@ select
 as sql_s
 from dual;
 
-@@H:\Utilities\Quick_Report_Create  'EXPORT CONTROL' 'Export Control - Customer Orders' "&mysql" 'IFSAPP' 'Export Check Customer Order p: OrderNo'
+@H:\Utilities\Quick_Report_Create  'Export Control' 'Export Control - Customer Orders' "&mysql" 'IFSAPP' 'Export Check Customer Order p: OrderNo'
 /
 show errors
 SPOOL OFF
