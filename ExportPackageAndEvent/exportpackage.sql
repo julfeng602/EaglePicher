@@ -64,6 +64,9 @@ CREATE OR REPLACE PACKAGE &PKG AS
                           connected_source_qty_ in number,
                           customer_id_ in varchar2) RETURN varchar2;
     function GetExportControlled(part_no_ in varchar2) return varchar2;
+    --function ShipmentLinkedToCustomerOrder(shipment_id_ in int) return boolean;
+    --function ShipmentLinkedToExportCompany(shipment_id_ in int) return boolean;
+    --function IsCountryOutsideUS(order_no_ in varchar2) return boolean;
 END &PKG;
 /
 SHOW ERROR
@@ -101,8 +104,8 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
         end if;
 
     end IsExportControlled;
-    
-    procedure GetCustomerCountryInfo(order_no_ in NVARCHAR2, customer_no_ out nvarchar2, ship_addr_no_ out nvarchar2, country_code_ out nvarchar2)
+
+    procedure GetCustomerCountryInfo(order_no_ in varchar2, customer_no_ out varchar2, ship_addr_no_ out varchar2, country_code_ out varchar2)
     is
     begin
         BEGIN
@@ -122,6 +125,63 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
             country_code_ := '';
         END;    
     end GetCustomerCountryInfo;
+    
+    function IsCountryOutsideUS(order_no_ in varchar2) return boolean
+    as
+        country_code_ customer_info_address_tab.country%type;
+        customer_no_ customer_order_tab.customer_no%type;
+        ship_addr_no_ customer_order_tab.ship_addr_no%type;
+    begin
+
+            GetCustomerCountryInfo(order_no_, customer_no_, ship_addr_no_, country_code_);    
+            dbms_output.put_line('CustomerCountryInfo: ' || customer_no_ || ', ' || ship_addr_no_ || ', ' || country_code_); 
+            return (country_code_ != 'US');
+    end IsCountryOutsideUS;
+
+    function ShipmentLinkedToCustomerOrder(shipment_id_ in int) return boolean
+    AS
+        is_linked_ int := 0;
+    begin
+        BEGIN
+            SELECT 1 INTO is_linked_ 
+            FROM CUSTOMER_ORDER o
+            join shipment s on o.order_no = s.source_ref1
+            where
+                s.shipment_id = shipment_id_ and
+                s.source_ref_type = 'Customer Order';
+        EXCEPTION 
+          WHEN NO_DATA_FOUND THEN	
+            is_linked_ := 0;                  
+        END;
+        if(is_linked_ = 1) then
+            return true;
+        else
+            return false;
+        end if;    
+    end ShipmentLinkedToCustomerOrder;
+    
+    function ShipmentLinkedToExportCompany(shipment_id_ in int) return boolean
+    AS
+        is_linked_ int := 0;
+        order_no_ customer_order.order_no%type;
+    BEGIN
+        BEGIN
+            Select source_ref1 into order_no_ from shipment where shipment_id = shipment_id_;
+            Select 1 into is_linked_
+            From 
+                company co
+                join e_p_export_controlled_clv ev on co.objkey = ev.cf$_export_company_db and co.company = (select company from customer_order where order_no = order_no_);
+        EXCEPTION WHEN OTHERS THEN
+            is_linked_ := 0;
+        END;
+        if(is_linked_ = 1) then
+            return true;
+        else
+            return false;
+        end if;           
+    END;
+
+
     
     procedure LicenseInfo(
                           order_no_ in varchar2,
@@ -163,14 +223,10 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
             license_connected_ := NULL;
         END;          
     end;
-    
+    --------Main Function that is called --------------------------------------
     function ExportCheckOk (shipment_id_ in int) RETURN int
 	IS 
 	  --customer_id customer_info.customer_id%type := '';
-      export_controlled_ boolean := false;
-      customer_no_ customer_order_tab.customer_no%type;
-      ship_addr_no_ customer_order_tab.ship_addr_no%type;
-      country_code_ customer_info_address_tab.country%type;
       license_no_ export_license_tab.license_number%TYPE;
       license_connected_ EXP_LICENSE_CONNECT_DETAIL.LICENSE_CONNECTED%TYPE;
       retVal int := 1;
@@ -193,39 +249,45 @@ CREATE OR REPLACE PACKAGE BODY &PKG AS
         where  s.shipment_id = shipment_id_ and  s.receiver_type_db = 'CUSTOMER'
         order by l.shipment_line_no;
 	BEGIN
-     FOR shipment_line_ IN get_shipment_lines LOOP
-        export_controlled_ := IsExportControlled(shipment_line_.part_no);
-        if(export_controlled_ = true) then
-            GetCustomerCountryInfo(shipment_line_.order_no, customer_no_, ship_addr_no_, country_code_);    
-            dbms_output.put_line('CustomerCountryInfo: ' || customer_no_ || ', ' || ship_addr_no_ || ', ' || country_code_);
-            if(country_code_ != 'US') then --check for a valid license
-                LicenseInfo(shipment_line_.order_no,
-                            shipment_line_.source_ref2,
-                            shipment_line_.source_ref3,
-                            shipment_line_.source_ref4,
-                            shipment_line_.part_no,
-                            shipment_line_.connected_source_qty,
-                            customer_no_,
-                            license_no_,
-                            license_connected_);
-                dbms_output.put_line('License: ' || license_no_ || ', ' || license_connected_ );
-                if (license_no_ is null or (license_no_ is not null and license_connected_ = 'False')) THEN
-                   
-                    retVal := 0;
-                end if;
-                 --Client_SYS.Add_Warning('CustomerOrderReservation', 'Invalid Licese');
-                  --raise_application_error(-20001, 'Export License not Found');
-            end if;
-        end if;
-        EXIT WHEN retVal  = 0;
-      
-      END LOOP;
-      
-        if (retVal = 1) THEN
-            dbms_output.put_line('EXPORT_CONTROLLED: TRUE');
-        ELSE
-            dbms_output.put_line('EXPORT_CONTROLLED: FALSE');
-        END IF;       
+        BEGIN
+            --CHECK TO SEE IF COMPANY IS EXPORT COMPANY, IF NOT THEN EXPORT OK.
+            if (not ShipmentLinkedToExportCompany(shipment_id_)) then
+                RETURN 1;
+            END IF;
+
+            IF(ShipmentLinkedToCustomerOrder(shipment_id_)) THEN
+                FOR shipment_line_ IN get_shipment_lines LOOP
+                    if(IsExportControlled(shipment_line_.part_no) or IsCountryOutsideUS(shipment_line_.order_no)) then
+
+                            LicenseInfo(shipment_line_.order_no,
+                                        shipment_line_.source_ref2,
+                                        shipment_line_.source_ref3,
+                                        shipment_line_.source_ref4,
+                                        shipment_line_.part_no,
+                                        shipment_line_.connected_source_qty,
+                                        shipment_line_.CUSTOMER_NO,
+                                        license_no_,
+                                        license_connected_);
+                            dbms_output.put_line('License: ' || license_no_ || ', ' || license_connected_ );
+                            if (license_no_ is null or (license_no_ is not null and license_connected_ = 'False')) THEN
+                               
+                                retVal := 0;
+                            end if;
+                             --Client_SYS.Add_Warning('CustomerOrderReservation', 'Invalid Licese');
+                              --raise_application_error(-20001, 'Export License not Found');
+                    end if;
+                    EXIT WHEN retVal  = 0;
+                  
+                END LOOP;
+            END IF;
+            if (retVal = 1) THEN
+                dbms_output.put_line('EXPORT_CONTROLLED: TRUE');
+            ELSE
+                dbms_output.put_line('EXPORT_CONTROLLED: FALSE');
+            END IF;
+        EXCEPTION WHEN OTHERS THEN
+            NULL;
+        END;
       Return retVal;
 	END ExportCheckOk;
     
