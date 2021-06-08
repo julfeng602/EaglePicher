@@ -1,0 +1,38 @@
+(cust_po_no_ in varchar2, cust_order_ in varchar2, company_ in varchar2) 
+(binds$_.cust_po_no, binds$_.cust_order, binds$_.company);
+(cust_po_no_, cust_order_, company_);
+   cust_po_no_     purchase_order_tab.order_no%type;
+   cust_order_     customer_order_tab.order_no%type;
+   company_        site_tab.company%type;
+
+   cust_po_no_ := binds$_.cust_po_no ;
+   cust_order_ := binds$_.cust_order;
+   company_ := binds$_.company; 
+
+   CURSOR get_comp_summary  IS
+      select 
+         null  dproject_funded_total,
+         sum(bd.baseline_cost)  dbaseline_cost,
+         null  dused_cost,
+         sum(project_Connection_Temp_API.Get_Planned_Hours(p.project_id, bd.control_category))  dcalc_cost_progress,
+         sum(project_Connection_Temp_API.Get_Planned_Hours(p.project_id, bd.control_category))  dbaseline_hours,
+         sum(Project_Connection_Details_Api.Get_Actual_Hours(a.activity_seq, bd.control_category))  dactual_hours,
+         NULL  dcalc_progress_hours,
+         sum(p.planned_revenue) dplanned_revenue,
+         NULL  dposted_revenue,
+         NULL  dcost_forecast_30,
+         NULL  dcost_forecast_31_60,
+         NULL  dcost_total_projected_60,
+         NULL  dpercent_funding_req,
+         NULL  damt_diff_already_funded
+         from customer_order co
+         left outer join customer_order_line col
+         on col.order_no = co.order_no
+         inner join project_cfv p
+         on p.project_id = co.project_id
+         left outer join activity_cfv a on a.project_id = p.project_id
+         left outer join project_baseline_detail bd on bd.activity_seq = a.activity_seq AND bd.project_id = p.project_id
+      where
+      co.customer_po_no like cust_po_no_ and
+      co.order_no like cust_order_ and
+      co.company like company_

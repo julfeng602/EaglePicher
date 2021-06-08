@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPORT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:ifsworld-com:schemas:report_report">
+   <CODE_GENERATION_PROPERTIES>
+      <CODE_GENERATION_PROPERTIES>
+      </CODE_GENERATION_PROPERTIES>
+   </CODE_GENERATION_PROPERTIES>
+   <DIAGRAMS>
+      <DIAGRAM>
+         <NAME>Main</NAME>
+         <DIAGRAM_TYPE>REPORT_STRUCTURE</DIAGRAM_TYPE>
+         <NODES>
+            <DIAGRAM_NODE>
+               <ID>e3982850-ba72-11eb-10e8-e1de2061a9c7</ID>
+               <NODE_TYPE>REPORT_BLOCK</NODE_TYPE>
+               <MINIMIZED>0</MINIMIZED>
+               <IS_MERGED>0</IS_MERGED>
+               <PROPERTIES>
+                  <PROPERTY>
+                     <NAME>ReportBlockName</NAME>
+                     <VALUE>CompHeader</VALUE>
+                  </PROPERTY>
+               </PROPERTIES>
+               <LOCATION>
+                  <POINT>
+                     <X>0</X>
+                     <Y>0</Y>
+                  </POINT>
+               </LOCATION>
+               <SIZE>
+                  <POINT>
+                     <X>148</X>
+                     <Y>475</Y>
+                  </POINT>
+               </SIZE>
+            </DIAGRAM_NODE>
+            <DIAGRAM_NODE>
+               <ID>76354a10-ba61-11eb-10e8-e1de2061a9c7</ID>
+               <NODE_TYPE>REPORT</NODE_TYPE>
+               <MINIMIZED>0</MINIMIZED>
+               <IS_MERGED>0</IS_MERGED>
+               <PROPERTIES>
+                  <PROPERTY>
+                     <NAME>EntityName</NAME>
+                     <VALUE>PctToCompletion</VALUE>
+                  </PROPERTY>
+                  <PROPERTY>
+                     <NAME>LUName</NAME>
+                     <VALUE>PctToCompletion</VALUE>
+                  </PROPERTY>
+               </PROPERTIES>
+               <LOCATION>
+                  <POINT>
+                     <X>315</X>
+                     <Y>181</Y>
+                  </POINT>
+               </LOCATION>
+               <SIZE>
+                  <POINT>
+                     <X>163</X>
+                     <Y>109</Y>
+                  </POINT>
+               </SIZE>
+            </DIAGRAM_NODE>
+         </NODES>
+         <EDGES>
+            <DIAGRAM_EDGE>
+               <EDGE_TYPE>AGGREGATE</EDGE_TYPE>
+               <SOURCE_NODE_ID>76354a10-ba61-11eb-10e8-e1de2061a9c7</SOURCE_NODE_ID>
+               <TARGET_NODE_ID>e3982850-ba72-11eb-10e8-e1de2061a9c7</TARGET_NODE_ID>
+               <IS_MERGED>0</IS_MERGED>
+               <PROPERTIES>
+                  <PROPERTY>
+                     <NAME>ReportBlockEdgeName</NAME>
+                     <VALUE>CompHeaders</VALUE>
+                  </PROPERTY>
+                  <PROPERTY>
+                     <NAME>IsArray</NAME>
+                     <VALUE>true</VALUE>
+                  </PROPERTY>
+                  <PROPERTY>
+                     <NAME>BlockName</NAME>
+                     <VALUE>CompHeader</VALUE>
+                  </PROPERTY>
+               </PROPERTIES>
+               <CONTROL_POINTS>
+                  <POINT>
+                     <X>314</X>
+                     <Y>234</Y>
+                  </POINT>
+                  <POINT>
+                     <X>147</X>
+                     <Y>235</Y>
+                  </POINT>
+               </CONTROL_POINTS>
+            </DIAGRAM_EDGE>
+         </EDGES>
+      </DIAGRAM>
+   </DIAGRAMS>
+   <NAME>PctToCompletion</NAME>
+   <COMPONENT>CMOD</COMPONENT>
+   <LU_NAME>PctToCompletion</LU_NAME>
+   <BLOCKS>
+      <BLOCK>
+         <NAME>CompHeader</NAME>
+         <CURSOR_DEFINITION>select 
+   co.customer_po_no   customer_po_no, 
+   co.order_no       order_no, 
+   col.line_no       line_no,
+   col.rel_no        rel_no,
+   co.company        company,
+   p.project_id      project,
+   a.sub_project_id  sub_project,
+   a.activity_seq    activity,
+   p.cf$_contract_type    contract_type,
+   p.cf$_funded_total    funded_total,
+   a.cf$_funded_amt    funded_amt,
+   bd.control_category    control_category,
+   bd.baseline_cost    baseline_cost,
+   Project_Connection_Temp_API.Get_Used_Cost(a.activity_seq)    used_cost,
+   Project_Connection_Temp_API.Get_Progress_Cost(p.project_id, bd.control_category)    progress_cost,
+   project_Connection_Temp_API.Get_Planned_Hours(p.project_id, bd.control_category)    baseline_hours,
+   Project_Connection_Details_Api.Get_Actual_Hours(a.activity_seq, bd.control_category)    actual_hours,
+   Project_Connection_Details_Api.Get_Progress_Hours(a.activity_seq, bd.control_category)    progress_hours,
+   p.planned_revenue    planned_revenue,
+   project_totals_api.Get_Rec_Revenue_Posted(co.company, &apos;F&apos;, p.project_id, &apos;*&apos;)    revenue_posted,
+   a.early_start    early_start,
+   a.early_finish    early_finish,
+   a.description    description
+   from customer_order co
+   left outer join customer_order_line col
+   on col.order_no = co.order_no
+   inner join project_cfv p
+   on p.project_id = co.project_id
+   left outer join activity_cfv a on a.project_id = p.project_id
+   left outer join project_baseline_detail bd on bd.activity_seq = a.activity_seq AND bd.project_id = p.project_id
+where
+co.customer_po_no like :CustPoNo and
+co.order_no like :CustOrder and
+co.company like :Company
+order by co.order_no, col.line_no, col.rel_no, a.activity_no</CURSOR_DEFINITION>
+         <ATTRIBUTES>
+            <ATTRIBUTE>
+               <NAME>CustomerPoNo</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>100</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>OrderNo</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>100</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>LineNo</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>100</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>RelNo</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>25</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>Company</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>10</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>Project</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>10</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>SubProject</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>10</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>Activity</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>25</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ContractType</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>25</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>FundedTotal</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>FundedAmt</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ControlCategory</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>25</LENGTH>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>BaselineCost</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>UsedCost</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ProgressCost</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>BaselineHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ActualHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ProgressHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>PlannedRevenue</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>RevenuePosted</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>EarlyStart</NAME>
+               <DATATYPE>TIMESTAMP</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>EarlyFinish</NAME>
+               <DATATYPE>TIMESTAMP</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>Description</NAME>
+               <DATATYPE>TEXT</DATATYPE>
+               <LENGTH>500</LENGTH>
+            </ATTRIBUTE>
+         </ATTRIBUTES>
+         <AGGREGATES>
+            <AGGREGATE>
+               <NAME>CompSummary</NAME>
+               <IS_ARRAY>1</IS_ARRAY>
+               <BLOCK>CompSummary</BLOCK>
+            </AGGREGATE>
+         </AGGREGATES>
+      </BLOCK>
+      <BLOCK>
+         <NAME>CompSummary</NAME>
+         <CURSOR_DEFINITION>select 
+   null  project_funded_total,
+   null  baseline_cost,
+   null  used_cost,
+   null  cost_progress,
+   NULL  baseline_hours,
+   NULL  actual_hours,
+   NULL  progress_hours,
+   NULL  planned_revenue,
+   NULL  posted_revenue,
+   NULL  cost_fc_thirty,
+   NULL  cost_fc_thirty_sixty,
+   NULL  cost_proj_sixty,
+   NULL  percent_funding_req,
+   NULL  amt_diff_already_funded
+from DUAL</CURSOR_DEFINITION>
+         <ATTRIBUTES>
+            <ATTRIBUTE>
+               <NAME>ProjectFundedTotal</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>BaselineCost</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>UsedCost</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>CostProgress</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>BaselineHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ActualHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>ProgressHours</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>PlannedRevenue</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>PostedRevenue</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>CostFcThirty</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>CostFcThirtySixty</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>CostProjSixty</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>PercentFundingReq</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+            <ATTRIBUTE>
+               <NAME>AmtDiffAlreadyFunded</NAME>
+               <DATATYPE>NUMBER</DATATYPE>
+            </ATTRIBUTE>
+         </ATTRIBUTES>
+      </BLOCK>
+   </BLOCKS>
+   <PARAMETERS>
+      <PARAMETER>
+         <CODE_GENERATION_PROPERTIES>
+            <CODE_GENERATION_PROPERTIES>
+               <LABEL_TEXT>Customer PO Number</LABEL_TEXT>
+            </CODE_GENERATION_PROPERTIES>
+         </CODE_GENERATION_PROPERTIES>
+         <NAME>CustPoNo</NAME>
+         <PARAMETER_DATATYPE>TEXT</PARAMETER_DATATYPE>
+         <LENGTH>25</LENGTH>
+         <DEFAULT_VALUE>%</DEFAULT_VALUE>
+         <IS_MANDATORY>1</IS_MANDATORY>
+         <IS_CUSTOM>1</IS_CUSTOM>
+         <IS_SINGLE>1</IS_SINGLE>
+         <ALLOW_BETWEEN>0</ALLOW_BETWEEN>
+         <ALLOW_WILDCARDS>1</ALLOW_WILDCARDS>
+      </PARAMETER>
+      <PARAMETER>
+         <CODE_GENERATION_PROPERTIES>
+            <CODE_GENERATION_PROPERTIES>
+               <LABEL_TEXT>Customer Order</LABEL_TEXT>
+            </CODE_GENERATION_PROPERTIES>
+         </CODE_GENERATION_PROPERTIES>
+         <NAME>CustOrder</NAME>
+         <PARAMETER_DATATYPE>TEXT</PARAMETER_DATATYPE>
+         <LENGTH>25</LENGTH>
+         <DEFAULT_VALUE>%</DEFAULT_VALUE>
+         <IS_MANDATORY>1</IS_MANDATORY>
+         <IS_CUSTOM>1</IS_CUSTOM>
+         <IS_SINGLE>1</IS_SINGLE>
+         <ALLOW_BETWEEN>0</ALLOW_BETWEEN>
+         <ALLOW_WILDCARDS>1</ALLOW_WILDCARDS>
+      </PARAMETER>
+      <PARAMETER>
+         <NAME>Company</NAME>
+         <PARAMETER_DATATYPE>TEXT</PARAMETER_DATATYPE>
+         <LENGTH>25</LENGTH>
+         <DEFAULT_VALUE>%</DEFAULT_VALUE>
+         <IS_MANDATORY>1</IS_MANDATORY>
+         <IS_CUSTOM>1</IS_CUSTOM>
+         <IS_SINGLE>1</IS_SINGLE>
+         <ALLOW_BETWEEN>0</ALLOW_BETWEEN>
+         <ALLOW_WILDCARDS>1</ALLOW_WILDCARDS>
+      </PARAMETER>
+   </PARAMETERS>
+   <TEXTS>
+      <TEXT>
+         <NAME>PctToCompletion</NAME>
+         <VALUE>Sample1</VALUE>
+      </TEXT>
+   </TEXTS>
+   <AGGREGATES>
+      <AGGREGATE>
+         <NAME>CompHeaders</NAME>
+         <IS_ARRAY>1</IS_ARRAY>
+         <BLOCK>CompHeader</BLOCK>
+      </AGGREGATE>
+   </AGGREGATES>
+</REPORT>

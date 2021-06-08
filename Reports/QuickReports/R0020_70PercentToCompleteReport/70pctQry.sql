@@ -1,6 +1,19 @@
 --select po.*, p.*  from purchase_order po
 --left outer join project p
 --on p.project_id = po.project_id
+/*
+Select
+    co.customer_po_no, 
+    co.order_no, 
+    co.company,
+    p.project_id
+from customer_order co
+inner join project_cfv p
+on p.project_id = co.project_id
+where
+co.customer_po_no = 'TEST2' and co.company = '100'
+order by co.order_no
+*/
 
 select 
     co.customer_po_no, 
@@ -9,7 +22,7 @@ select
     col.rel_no,
     co.company,
     p.project_id,
-    --a.sub_project_id,
+    a.sub_project_id,
     a.activity_seq,
     dme_contract_api.Get_Contract_Type(co.customer_po_no),
     p.cf$_contract_type,
@@ -43,9 +56,11 @@ left outer join activity_cfv a on a.project_id = p.project_id
 left outer join project_baseline_detail bd on bd.activity_seq = a.activity_seq AND bd.project_id = p.project_id
 --left outer join project_connection_temp pc on pc.project_id = p.project_id and pc.project_cost_element = bd.control_category
 where
-co.customer_po_no = 'TEST2'
+--co.customer_po_no like '%' and co.company like '%'
+co.customer_po_no = 'TEST2' 
+and co.company = '100'
 --co.customer_po_no = 'COSTPLUS'
---co.order_no = 'D1020'
+and co.order_no = 'D1002'
 --a.activity_NO LIKE 'A%'
 --p.project_id LIKE 'D102%'
 order by co.order_no, col.line_no, col.rel_no, a.activity_no

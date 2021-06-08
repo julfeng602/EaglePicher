@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <report-layout>
+      <properties>
+         <version>9.0</version>
+         <layout-type>EXCEL</layout-type> <!--SCRIPT,XSL,XML,EXCEL,SIMPLE EXCEL-->
+         <plugin-class>ifs.application.printagentservice.impl.extendedformatter.excelplugin.ExcelPlugin</plugin-class>
+         <output-method>E-MAIL</output-method> <!-- BINARY,FILE,E-MAIL this can be more that one value separated by ; -->
+         <output-name></output-name> <!-- This will default to "ReportId"_"ResultKey" if left empty. You can add a path as part of the filename. -->
+         <output-extension>xlsx</output-extension> <!-- The file name and attachment name will be a concatenation of <output-name> and <output-extension>. -->
+         <default-output-reference> 
+            <e-mail>jonulfeng@gmail.com</e-mail> <!-- if left empty, it will use the email adress in the print dialog or if not defined it will use the sender address instead (send to yourself). Make sure each user has his own email adress set correctly. -->
+            <e-mail-sender></e-mail-sender>
+            <e-mail-cc></e-mail-cc>
+            <e-mail-subject>Excel report [#ReportTitle] is ready.</e-mail-subject>
+            <e-mail-body><![CDATA[Printjob: [#PrintJobId] has finished executing. Excel report attached.]]></e-mail-body>
+            <file-directory></file-directory> <!-- overrides the system set output directory -->
+            <binary></binary>
+         </default-output-reference>
+         <full-xml>TRUE</full-xml>
+         <flattened-xml>
+            <enabled>TRUE</enabled>
+            <strongtyping>TRUE</strongtyping>
+            <full-xsd-column-set>OFF</full-xsd-column-set>
+            <document-model>OFF</document-model>
+         </flattened-xml>
+         <report-id>PCT_TO_COMPLETION_REP</report-id> <!-- For which reports should IFS installer register this layout. -->
+         <report-title>Excel Layout</report-title> <!-- Title used when installed via IFS Installer -->
+      </properties>
+      <plugin>
+         <properties>
+            <use-display-names>ON</use-display-names>
+            <excel-template>[#ReportId]_TEMP.xlsx</excel-template> <!-- This line makes this layout dynamic. Just install the Report Template following the name standard -->
+            <include-columns></include-columns>
+            <exclude-columns>_BLOCK_TYPE,_HEADER</exclude-columns>
+         </properties>
+      </plugin>
+</report-layout>

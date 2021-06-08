@@ -1,0 +1,537 @@
+-----------------------------------------------------------------------------
+--
+--  Logical unit: PctToCompletion
+--
+--  Report:       PctToCompletion
+--
+--  IFS Developer Studio Template Version 1.3
+--
+--  NOTE: This file is generated and will be overwritten at next model change
+-----------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------
+-------------------- PACKAGE SPECIFICATION ----------------------------------
+-----------------------------------------------------------------------------
+
+PROMPT Creating PCT_TO_COMPLETION_RPI specification
+
+CREATE OR REPLACE PACKAGE PCT_TO_COMPLETION_RPI AS
+
+module_ CONSTANT VARCHAR2(6) := 'CMOD';
+lu_name_ CONSTANT VARCHAR2(25) := 'PctToCompletion';
+
+PROCEDURE Execute_Report (
+   report_attr_    IN VARCHAR2,
+   parameter_attr_ IN VARCHAR2 );
+
+FUNCTION Test (
+   cust_po_no_               IN VARCHAR2,
+   cust_order_               IN VARCHAR2,
+   company_                  IN VARCHAR2)
+   RETURN NUMBER;
+
+PROCEDURE Init;
+
+END PCT_TO_COMPLETION_RPI;
+/
+SHOW ERROR
+
+-----------------------------------------------------------------------------
+-------------------- VIEWS FOR REPORT META DATA -----------------------------
+-----------------------------------------------------------------------------
+
+PROMPT Creating report table PCT_TO_COMPLETION_RPT
+
+DECLARE
+   columns_    Database_SYS.ColumnTabType;
+   table_name_ VARCHAR2(30) := 'PCT_TO_COMPLETION_RPT';
+BEGIN
+   Database_SYS.Reset_Column_Table(columns_);
+   Database_SYS.Set_Table_Column(columns_, 'RESULT_KEY', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'ROW_NO', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'PARENT_ROW_NO', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'ROWVERSION', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'CUST_PO_NO', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'CUST_ORDER', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'COMPANY', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'CUSTOMER_PO_NO', 'VARCHAR2(100)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'ORDER_NO', 'VARCHAR2(100)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'LINE_NO', 'VARCHAR2(100)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'REL_NO', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PROJECT', 'VARCHAR2(10)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'SUB_PROJECT', 'VARCHAR2(10)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'ACTIVITY', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'CONTRACT_TYPE', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'FUNDED_TOTAL', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'FUNDED_AMT', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'CONTROL_CATEGORY', 'VARCHAR2(25)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'BASELINE_COST', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'USED_COST', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PROGRESS_COST', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'BASELINE_HOURS', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'ACTUAL_HOURS', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PROGRESS_HOURS', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PLANNED_REVENUE', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'REVENUE_POSTED', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'EARLY_START', 'DATE', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'EARLY_FINISH', 'DATE', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'DESCRIPTION', 'VARCHAR2(500)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PROJECT_FUNDED_TOTAL', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'COST_PROGRESS', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'POSTED_REVENUE', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'COST_FC_THIRTY', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'COST_FC_THIRTY_SIXTY', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'COST_PROJ_SIXTY', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PERCENT_FUNDING_REQ', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'AMT_DIFF_ALREADY_FUNDED', 'NUMBER', 'Y');
+   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_REPORT_DATA', NULL, TRUE);
+END;
+/
+
+DECLARE
+   columns_    Database_SYS.ColumnTabType;
+   table_name_ VARCHAR2(30) := 'PCT_TO_COMPLETION_RPT';
+   index_name_ VARCHAR2(30) := 'PCT_TO_COMPLETION_RPK';
+BEGIN
+   Database_SYS.Reset_Column_Table(columns_);
+   Database_SYS.Set_Table_Column(columns_, 'RESULT_KEY');
+   Database_SYS.Set_Table_Column(columns_, 'ROW_NO');
+   Database_SYS.Set_Table_Column(columns_, 'PARENT_ROW_NO');
+   Database_SYS.Create_Constraint(table_name_, index_name_, columns_, 'P', '&IFSAPP_REPORT_INDEX', NULL, TRUE, TRUE);
+   Database_SYS.Reset_Column_Table(columns_);
+END;
+/
+
+PROMPT Creating report view PCT_TO_COMPLETION_REP
+
+CREATE OR REPLACE VIEW PCT_TO_COMPLETION_REP AS
+SELECT RESULT_KEY, ROW_NO, PARENT_ROW_NO, ROWVERSION
+   ,CUST_PO_NO,CUST_ORDER,COMPANY,CUSTOMER_PO_NO,ORDER_NO,LINE_NO,REL_NO,PROJECT,SUB_PROJECT,ACTIVITY,CONTRACT_TYPE,FUNDED_TOTAL,FUNDED_AMT,CONTROL_CATEGORY,BASELINE_COST,USED_COST,PROGRESS_COST,BASELINE_HOURS,ACTUAL_HOURS,PROGRESS_HOURS,PLANNED_REVENUE,REVENUE_POSTED,EARLY_START,EARLY_FINISH,DESCRIPTION,PROJECT_FUNDED_TOTAL,COST_PROGRESS,POSTED_REVENUE,COST_FC_THIRTY,COST_FC_THIRTY_SIXTY,COST_PROJ_SIXTY,PERCENT_FUNDING_REQ,AMT_DIFF_ALREADY_FUNDED
+FROM   PCT_TO_COMPLETION_RPT t
+WHERE EXISTS (SELECT 1 FROM allowed_report a WHERE a.result_key = t.result_key)
+WITH   read only;
+
+COMMENT ON TABLE PCT_TO_COMPLETION_REP
+   IS 'LU=PctToCompletion^PROMPT=Pct To Completion^MODULE=CMOD^TITLETEXT=Pct To Completion^';
+
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.result_key
+   IS 'FLAGS=M----^DATATYPE=NUMBER^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.row_no
+   IS 'FLAGS=M----^DATATYPE=NUMBER^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cust_po_no
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Customer PO Number^QUERY=Cust Po No:^QFLAGS=M-S-L^QVALUE=%^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cust_order
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Customer Order^QUERY=Cust Order:^QFLAGS=M-S-L^QVALUE=%^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.company
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Company^QUERY=Company:^QFLAGS=M-S-L^QVALUE=%^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.customer_po_no
+   IS 'FLAGS=A----^DATATYPE=STRING(100)^TITLE=Customer Po No^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.order_no
+   IS 'FLAGS=A----^DATATYPE=STRING(100)^TITLE=Order No^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.line_no
+   IS 'FLAGS=A----^DATATYPE=STRING(100)^TITLE=Line No^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.rel_no
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Rel No^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.project
+   IS 'FLAGS=A----^DATATYPE=STRING(10)^TITLE=Project^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.sub_project
+   IS 'FLAGS=A----^DATATYPE=STRING(10)^TITLE=Sub Project^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.activity
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Activity^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.contract_type
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Contract Type^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.funded_total
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Funded Total^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.funded_amt
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Funded Amt^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.control_category
+   IS 'FLAGS=A----^DATATYPE=STRING(25)^TITLE=Control Category^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.baseline_cost
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Baseline Cost^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.used_cost
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Used Cost^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.progress_cost
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Progress Cost^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.baseline_hours
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Baseline Hours^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.actual_hours
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Actual Hours^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.progress_hours
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Progress Hours^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.planned_revenue
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Planned Revenue^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.revenue_posted
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Revenue Posted^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.early_start
+   IS 'FLAGS=A----^DATATYPE=DATE/DATETIME^TITLE=Early Start^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.early_finish
+   IS 'FLAGS=A----^DATATYPE=DATE/DATETIME^TITLE=Early Finish^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.description
+   IS 'FLAGS=A----^DATATYPE=STRING(500)^TITLE=Description^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.project_funded_total
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Project Funded Total^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cost_progress
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Cost Progress^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.posted_revenue
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Posted Revenue^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cost_fc_thirty
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Cost Fc Thirty^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cost_fc_thirty_sixty
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Cost Fc Thirty Sixty^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.cost_proj_sixty
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Cost Proj Sixty^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.percent_funding_req
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Percent Funding Req^';
+COMMENT ON COLUMN PCT_TO_COMPLETION_REP.amt_diff_already_funded
+   IS 'FLAGS=A----^DATATYPE=NUMBER^TITLE=Amt Diff Already Funded^';
+
+-----------------------------------------------------------------------------
+-------------------- REPORT REGISTRATION ------------------------------------
+-----------------------------------------------------------------------------
+
+BEGIN
+   Report_SYS.Define_Report_('PCT_TO_COMPLETION_REP', 'CMOD', 'PctToCompletion', 'Pct To Completion', 'PCT_TO_COMPLETION_RPT', 'PCT_TO_COMPLETION_RPI.Execute_Report', 0);
+   Report_SYS.Define_Report_Text_('PCT_TO_COMPLETION_REP', 'PCT_TO_COMPLETION', 'Sample1');
+   Report_SYS.Refresh_('PCT_TO_COMPLETION_REP');
+   Report_Lu_Definition_API.Clear_Custom_Fields_For_Report('PCT_TO_COMPLETION_REP');
+END;
+/
+
+-----------------------------------------------------------------------------
+-------------------- PACKAGE IMPLEMENTATION ---------------------------------
+-----------------------------------------------------------------------------
+
+PROMPT Creating PCT_TO_COMPLETION_RPI implementation
+
+CREATE OR REPLACE PACKAGE BODY PCT_TO_COMPLETION_RPI IS
+
+   TYPE binds$ IS RECORD (
+      cust_po_no                VARCHAR2(32000),
+      cust_order                VARCHAR2(32000),
+      company                   VARCHAR2(32000));
+
+   CURSOR get_comp_header IS
+      select 
+         co.customer_po_no   customer_po_no, 
+         co.order_no       order_no, 
+         col.line_no       line_no,
+         col.rel_no        rel_no,
+         co.company        company,
+         p.project_id      project,
+         a.sub_project_id  sub_project,
+         a.activity_seq    activity,
+         p.cf$_contract_type    contract_type,
+         p.cf$_funded_total    funded_total,
+         a.cf$_funded_amt    funded_amt,
+         bd.control_category    control_category,
+         bd.baseline_cost    baseline_cost,
+         Project_Connection_Temp_API.Get_Used_Cost(a.activity_seq)    used_cost,
+         Project_Connection_Temp_API.Get_Progress_Cost(p.project_id, bd.control_category)    progress_cost,
+         project_Connection_Temp_API.Get_Planned_Hours(p.project_id, bd.control_category)    baseline_hours,
+         Project_Connection_Details_Api.Get_Actual_Hours(a.activity_seq, bd.control_category)    actual_hours,
+         Project_Connection_Details_Api.Get_Progress_Hours(a.activity_seq, bd.control_category)    progress_hours,
+         p.planned_revenue    planned_revenue,
+         project_totals_api.Get_Rec_Revenue_Posted(co.company, 'F', p.project_id, '*')    revenue_posted,
+         a.early_start    early_start,
+         a.early_finish    early_finish,
+         a.description    description
+         from customer_order co
+         left outer join customer_order_line col
+         on col.order_no = co.order_no
+         inner join project_cfv p
+         on p.project_id = co.project_id
+         left outer join activity_cfv a on a.project_id = p.project_id
+         left outer join project_baseline_detail bd on bd.activity_seq = a.activity_seq AND bd.project_id = p.project_id
+      where
+      co.customer_po_no like cust_po_no_ and
+      co.order_no like cust_order_ and
+      co.company like company_
+      order by co.order_no, col.line_no, col.rel_no, a.activity_no;
+
+   CURSOR get_comp_summary IS
+      select 
+         null  project_funded_total,
+         null  baseline_cost,
+         null  used_cost,
+         null  cost_progress,
+         NULL  baseline_hours,
+         NULL  actual_hours,
+         NULL  progress_hours,
+         NULL  planned_revenue,
+         NULL  posted_revenue,
+         NULL  cost_fc_thirty,
+         NULL  cost_fc_thirty_sixty,
+         NULL  cost_proj_sixty,
+         NULL  percent_funding_req,
+         NULL  amt_diff_already_funded
+      from DUAL;
+
+-----------------------------------------------------------------------------
+-------------------- RESULT SET METHODS -------------------------------------
+-----------------------------------------------------------------------------
+
+--@IgnoreWrongParamOrder
+PROCEDURE Add_Result_Row___ (
+   result_key$_               IN NUMBER,
+   binds$_                    IN binds$,
+   rec_comp_header_           IN get_comp_header%ROWTYPE DEFAULT NULL,
+   rec_comp_summary_          IN get_comp_summary%ROWTYPE DEFAULT NULL,
+   row_no$_                   IN OUT NUMBER)
+IS
+BEGIN
+   INSERT INTO PCT_TO_COMPLETION_RPT (
+      result_key,
+      cust_po_no,
+      cust_order,
+      company,
+      customer_po_no,
+      order_no,
+      line_no,
+      rel_no,
+      project,
+      sub_project,
+      activity,
+      contract_type,
+      funded_total,
+      funded_amt,
+      control_category,
+      baseline_cost,
+      used_cost,
+      progress_cost,
+      baseline_hours,
+      actual_hours,
+      progress_hours,
+      planned_revenue,
+      revenue_posted,
+      early_start,
+      early_finish,
+      description,
+      project_funded_total,
+      cost_progress,
+      posted_revenue,
+      cost_fc_thirty,
+      cost_fc_thirty_sixty,
+      cost_proj_sixty,
+      percent_funding_req,
+      amt_diff_already_funded,
+      row_no, parent_row_no)
+   VALUES (
+      result_key$_,
+      binds$_.cust_po_no,
+      binds$_.cust_order,
+      nvl(rec_comp_header_.company,
+      binds$_.company),
+      rec_comp_header_.customer_po_no,
+      rec_comp_header_.order_no,
+      rec_comp_header_.line_no,
+      rec_comp_header_.rel_no,
+      rec_comp_header_.project,
+      rec_comp_header_.sub_project,
+      rec_comp_header_.activity,
+      rec_comp_header_.contract_type,
+      rec_comp_header_.funded_total,
+      rec_comp_header_.funded_amt,
+      rec_comp_header_.control_category,
+      nvl(rec_comp_summary_.baseline_cost,
+      rec_comp_header_.baseline_cost),
+      nvl(rec_comp_summary_.used_cost,
+      rec_comp_header_.used_cost),
+      rec_comp_header_.progress_cost,
+      nvl(rec_comp_summary_.baseline_hours,
+      rec_comp_header_.baseline_hours),
+      nvl(rec_comp_summary_.actual_hours,
+      rec_comp_header_.actual_hours),
+      nvl(rec_comp_summary_.progress_hours,
+      rec_comp_header_.progress_hours),
+      nvl(rec_comp_summary_.planned_revenue,
+      rec_comp_header_.planned_revenue),
+      rec_comp_header_.revenue_posted,
+      rec_comp_header_.early_start,
+      rec_comp_header_.early_finish,
+      rec_comp_header_.description,
+      rec_comp_summary_.project_funded_total,
+      rec_comp_summary_.cost_progress,
+      rec_comp_summary_.posted_revenue,
+      rec_comp_summary_.cost_fc_thirty,
+      rec_comp_summary_.cost_fc_thirty_sixty,
+      rec_comp_summary_.cost_proj_sixty,
+      rec_comp_summary_.percent_funding_req,
+      rec_comp_summary_.amt_diff_already_funded,
+      row_no$_, 0);
+   row_no$_ := row_no$_+1;
+END Add_Result_Row___;
+
+-----------------------------------------------------------------------------
+-------------------- REPORT EXECUTION ---------------------------------------
+-----------------------------------------------------------------------------
+
+PROCEDURE Execute_Report (
+   report_attr_    IN VARCHAR2,
+   parameter_attr_ IN VARCHAR2 )
+IS
+   result_key$_              NUMBER;
+   row_no$_                  NUMBER := 1;
+   binds$_                   binds$;
+   xml$_                     CLOB;
+   outer_filter_attr$_       VARCHAR2(32000);
+   outer_filter_where$_      VARCHAR2(32000);
+   inner_filter_attr$_       VARCHAR2(32000);
+   inner_filter_where$_      VARCHAR2(32000);
+   has_comp_header_ BOOLEAN;
+   rec_comp_header_ get_comp_header%ROWTYPE;
+   par_comp_header_ binds$;
+   has_comp_summary_ BOOLEAN;
+   rec_comp_summary_ get_comp_summary%ROWTYPE;
+   par_comp_summary_ binds$;
+BEGIN
+   General_SYS.Init_Method(lu_name_, 'PCT_TO_COMPLETION_RPI', 'Execute_Report');
+   result_key$_                 := Client_SYS.Attr_Value_To_Number(Client_SYS.Get_Item_Value('RESULT_KEY', report_attr_));
+   binds$_.cust_po_no           := Client_SYS.Get_Item_Value('CUST_PO_NO', parameter_attr_); 
+   binds$_.cust_order           := Client_SYS.Get_Item_Value('CUST_ORDER', parameter_attr_); 
+   binds$_.company              := Client_SYS.Get_Item_Value('COMPANY', parameter_attr_); 
+
+   Xml_Record_Writer_SYS.Create_Report_Header(xml$_, 'PCT_TO_COMPLETION_REP', 'Pct To Completion');
+
+   has_comp_header_ := FALSE;
+   par_comp_header_ := binds$_;
+   Xml_Record_Writer_SYS.Start_Element(xml$_, 'COMP_HEADERS');
+   OPEN get_comp_header;
+   LOOP
+      FETCH get_comp_header INTO rec_comp_header_;
+      has_comp_header_ := get_comp_header%FOUND OR get_comp_header%ROWCOUNT > 0;
+      EXIT WHEN get_comp_header%NOTFOUND;
+      Xml_Record_Writer_SYS.Start_Element(xml$_, 'COMP_HEADER');
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'CUSTOMER_PO_NO', rec_comp_header_.customer_po_no);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'ORDER_NO', rec_comp_header_.order_no);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'LINE_NO', rec_comp_header_.line_no);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'REL_NO', rec_comp_header_.rel_no);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'COMPANY', rec_comp_header_.company);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'PROJECT', rec_comp_header_.project);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'SUB_PROJECT', rec_comp_header_.sub_project);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'ACTIVITY', rec_comp_header_.activity);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'CONTRACT_TYPE', rec_comp_header_.contract_type);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'FUNDED_TOTAL', rec_comp_header_.funded_total);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'FUNDED_AMT', rec_comp_header_.funded_amt);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'CONTROL_CATEGORY', rec_comp_header_.control_category);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'BASELINE_COST', rec_comp_header_.baseline_cost);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'USED_COST', rec_comp_header_.used_cost);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'PROGRESS_COST', rec_comp_header_.progress_cost);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'BASELINE_HOURS', rec_comp_header_.baseline_hours);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'ACTUAL_HOURS', rec_comp_header_.actual_hours);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'PROGRESS_HOURS', rec_comp_header_.progress_hours);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'PLANNED_REVENUE', rec_comp_header_.planned_revenue);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'REVENUE_POSTED', rec_comp_header_.revenue_posted);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'EARLY_START', rec_comp_header_.early_start);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'EARLY_FINISH', rec_comp_header_.early_finish);
+      Xml_Record_Writer_SYS.Add_Element(xml$_, 'DESCRIPTION', rec_comp_header_.description);
+      has_comp_summary_ := FALSE;
+      par_comp_summary_ := binds$_;
+      Xml_Record_Writer_SYS.Start_Element(xml$_, 'COMP_SUMMARY');
+      OPEN get_comp_summary;
+      LOOP
+         FETCH get_comp_summary INTO rec_comp_summary_;
+         has_comp_summary_ := get_comp_summary%FOUND OR get_comp_summary%ROWCOUNT > 0;
+         EXIT WHEN get_comp_summary%NOTFOUND;
+         Xml_Record_Writer_SYS.Start_Element(xml$_, 'COMP_SUMMARY');
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'PROJECT_FUNDED_TOTAL', rec_comp_summary_.project_funded_total);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'BASELINE_COST', rec_comp_summary_.baseline_cost);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'USED_COST', rec_comp_summary_.used_cost);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'COST_PROGRESS', rec_comp_summary_.cost_progress);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'BASELINE_HOURS', rec_comp_summary_.baseline_hours);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'ACTUAL_HOURS', rec_comp_summary_.actual_hours);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'PROGRESS_HOURS', rec_comp_summary_.progress_hours);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'PLANNED_REVENUE', rec_comp_summary_.planned_revenue);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'POSTED_REVENUE', rec_comp_summary_.posted_revenue);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'COST_FC_THIRTY', rec_comp_summary_.cost_fc_thirty);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'COST_FC_THIRTY_SIXTY', rec_comp_summary_.cost_fc_thirty_sixty);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'COST_PROJ_SIXTY', rec_comp_summary_.cost_proj_sixty);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'PERCENT_FUNDING_REQ', rec_comp_summary_.percent_funding_req);
+         Xml_Record_Writer_SYS.Add_Element(xml$_, 'AMT_DIFF_ALREADY_FUNDED', rec_comp_summary_.amt_diff_already_funded);
+         Xml_Record_Writer_SYS.End_Element(xml$_, 'COMP_SUMMARY');
+         Add_Result_Row___(result_key$_,
+                           binds$_ => binds$_,
+                           rec_comp_header_ => rec_comp_header_,
+                           rec_comp_summary_ => rec_comp_summary_,
+                           row_no$_ => row_no$_);
+      END LOOP;
+      CLOSE get_comp_summary;
+      Xml_Record_Writer_SYS.End_Element(xml$_, 'COMP_SUMMARY');
+      binds$_ := par_comp_summary_;
+      IF NOT has_comp_summary_ THEN
+         Add_Result_Row___(result_key$_,
+                           binds$_ => binds$_,
+                           rec_comp_header_ => rec_comp_header_,
+                           row_no$_ => row_no$_);
+      END IF;
+
+      Xml_Record_Writer_SYS.End_Element(xml$_, 'COMP_HEADER');
+   END LOOP;
+   CLOSE get_comp_header;
+   Xml_Record_Writer_SYS.End_Element(xml$_, 'COMP_HEADERS');
+   binds$_ := par_comp_header_;
+   IF NOT has_comp_header_ THEN
+      Add_Result_Row___(result_key$_,
+                        binds$_ => binds$_,
+                        row_no$_ => row_no$_);
+   END IF;
+
+   Xml_Record_Writer_SYS.End_Element(xml$_, 'PCT_TO_COMPLETION_REP');
+   Report_SYS.Finish_Xml_Report('PCT_TO_COMPLETION_REP', result_key$_, xml$_);
+   EXCEPTION
+      WHEN OTHERS THEN
+         IF get_comp_header%ISOPEN THEN
+            CLOSE get_comp_header;
+         END IF;
+         IF get_comp_summary%ISOPEN THEN
+            CLOSE get_comp_summary;
+         END IF;
+         RAISE;
+END Execute_Report;
+
+-----------------------------------------------------------------------------
+-------------------- FOUNDATION1 METHODS ------------------------------------
+-----------------------------------------------------------------------------
+-- Test
+--   Invokes the report method for testing purposes.
+-- Init
+--   Dummy procedure that can be called at database startup to ensure that
+--   this package is loaded into memory for performance reasons only.
+-----------------------------------------------------------------------------
+
+FUNCTION Test (
+   cust_po_no_               IN VARCHAR2,
+   cust_order_               IN VARCHAR2,
+   company_                  IN VARCHAR2)
+RETURN NUMBER
+IS
+   result_key_     NUMBER;
+   report_attr_    VARCHAR2(200);
+   parameter_attr_ VARCHAR2(32000);
+BEGIN
+   General_SYS.Init_Method(lu_name_, 'PCT_TO_COMPLETION_RPI', 'Test');
+   Report_SYS.Get_Result_Key__(result_key_);
+   Client_SYS.Add_To_Attr('RESULT_KEY', result_key_, report_attr_);
+   IF (cust_po_no_ IS NOT NULL) THEN
+      Client_SYS.Add_To_Attr('CUST_PO_NO', cust_po_no_, parameter_attr_);
+   END IF;
+   IF (cust_order_ IS NOT NULL) THEN
+      Client_SYS.Add_To_Attr('CUST_ORDER', cust_order_, parameter_attr_);
+   END IF;
+   IF (company_ IS NOT NULL) THEN
+      Client_SYS.Add_To_Attr('COMPANY', company_, parameter_attr_);
+   END IF;
+   Execute_Report(report_attr_, parameter_attr_);
+   RETURN result_key_;
+END Test;
+
+
+PROCEDURE Init
+IS
+BEGIN
+   NULL;
+END Init;
+
+END PCT_TO_COMPLETION_RPI;
+/
+SHOW ERROR

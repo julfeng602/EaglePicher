@@ -1,0 +1,5 @@
+SELECT to_char(l.cf$_updated_date, 'DD-MON-YYYY HH24:MI:SS'), to_char(l.DATE_ENTERED, 'DD-MON-YYYY HH24:MI:SS') FROM CUSTOMER_ORDER_LINE_CFV L WHERE ORDER_NO = 'D1013'
+
+SELECT to_char(l.cf$_updated_date, 'DD-MON-YYYY HH24:MI:SS') FROM CUSTOMER_ORDER_LINE_CFV l WHERE OBJKEY = (SELECT ROWKEY FROM CUSTOMER_ORDER_LINE_TAB WHERE ORDER_NO = 'D1013')
+
+select * from customer_order_join_cfv where order_no = 'D1013'
